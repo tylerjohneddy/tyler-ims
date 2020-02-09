@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CrudServices<T> {
 
-    public List<T> readAll();
+    public List<String> readAll();
      
     void create(T t);
      

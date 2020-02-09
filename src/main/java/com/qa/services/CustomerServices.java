@@ -13,7 +13,7 @@ public class CustomerServices implements CrudServices<Customer> {
 		this.customerDao = customerDao;
 	}
 	
-	public List<Customer> readAll() {
+	public List<String> readAll() {
 		return customerDao.readAll();
 	}
 
@@ -21,11 +21,13 @@ public class CustomerServices implements CrudServices<Customer> {
 		customerDao.create(customer);
 	}
 
-	public void update(long id, Customer t) {
+	public void update(long id, Customer customer) {
+		customerDao.update(id, customer);
 		
 	}
 
-	public void delete(Customer t) {
+	public void delete(Customer customer) {
+		customerDao.delete(customer);
 		
 	}
 

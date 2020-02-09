@@ -1,5 +1,6 @@
 package com.qa.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.qa.utils.Utils;
@@ -19,7 +20,7 @@ public enum Action {
 	}
 
 	public String description() {
-		return this.name() + ": " + this.description;
+		return String.format("%-10s : %s", this.name(),this.description);
 	}
 
 	public static void printActions() {

@@ -20,7 +20,7 @@ public enum Domain {
 	}
 	
 	public String description() {
-		return this.name() + ": " +this.description;
+		return String.format("%-10s : %-30s",this.name(),this.description);
 	}
 	
 	public static void printDomains() {
