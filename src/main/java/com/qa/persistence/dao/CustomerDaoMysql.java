@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,6 +17,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 
+	@Override
 	public List<String> readAll() {
 		// ArrayList<Customer> customers = new ArrayList<Customer>();
 		List<String> customer = null;
@@ -41,6 +41,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		return customer;
 	}
 
+	@Override
 	public void create(Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
@@ -55,6 +56,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		}
 	}
 
+	@Override
 	public void update(long id, Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
@@ -70,6 +72,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	}
 
+	@Override
 	public void delete(Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
@@ -86,12 +89,12 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public String readOne(Customer customer) {
-		// TODO Auto-generated method stub
 		List<String> line = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(String.format("select * from customers where id = %s",customer.getId()));
+			ResultSet resultSet = statement
+					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
 //			while (resultSet.next()) {
 //				Long id = resultSet.getLong("id");
 //				String firstName = resultSet.getString("first_name");
