@@ -25,13 +25,6 @@ public class CustomerDaoMysql implements Dao<Customer> {
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("select * from customers");
-//			while (resultSet.next()) {
-//				Long id = resultSet.getLong("id");
-//				String firstName = resultSet.getString("first_name");
-//				String surname = resultSet.getString("surname");
-//				Customer customer = new Customer(id, firstName, surname);
-//				customers.add(customer);
-//			}
 			Utils utils = new Utils();
 			customer = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
@@ -61,9 +54,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			statement.executeUpdate(String.format("UPDATE INTO customers values(null,'%s','%s') WHERE id=%s;",
+			statement.executeUpdate(String.format("UPDATE customers set forename = '%s', surname = '%s' WHERE id=%s;",
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
-
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");

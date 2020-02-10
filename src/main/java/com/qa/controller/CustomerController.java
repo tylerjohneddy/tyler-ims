@@ -16,12 +16,14 @@ public class CustomerController implements CrudController<Customer> {
 		this.customerService = customerService;
 	}
 
+	@Override
 	public void readAll() {
 		for (String customer : customerService.readAll()) {
 			LOGGER.info(customer.toString());
 		}
 	}
 
+	@Override
 	public void create() {
 		LOGGER.info("Please enter a first name:");
 		String firstName = Utils.getInput();
@@ -31,6 +33,7 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Customer created");
 	}
 
+	@Override
 	public void update() {
 		LOGGER.info("Please Enter Customer ID to update:");
 		Long id = Long.parseLong(Utils.getInput());
@@ -38,10 +41,11 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = Utils.getInput();
 		LOGGER.info("Please enter a surname:");
 		String surname = Utils.getInput();
-		customerService.update(id, new Customer(firstName, surname));
+		customerService.update(id, new Customer(id, firstName, surname));
 
 	}
 
+	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Customer ID to delete:");
 		readOne();
@@ -51,10 +55,10 @@ public class CustomerController implements CrudController<Customer> {
 
 	}
 
+	@Override
 	public void readOne() {
-		Long id = Long.parseLong(Utils.getInput());		
+		Long id = Long.parseLong(Utils.getInput());
 		customerService.readOne(new Customer(id));
 	}
-
 
 }
