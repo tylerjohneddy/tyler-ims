@@ -41,7 +41,7 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = Utils.getInput();
 		LOGGER.info("Please enter a surname:");
 		String surname = Utils.getInput();
-		customerService.update(id, new Customer(id, firstName, surname));
+		customerService.update(new Customer(id, firstName, surname));
 
 	}
 
@@ -50,7 +50,6 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please Enter Customer ID to delete:");
 		readOne();
 		Long id = Long.parseLong(Utils.getInput());
-		LOGGER.info("Confirm deletion of : ");
 		customerService.delete(new Customer(id));
 
 	}
@@ -58,7 +57,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public void readOne() {
 		Long id = Long.parseLong(Utils.getInput());
-		customerService.readOne(new Customer(id));
+		LOGGER.info(customerService.readOne(new Customer(id)));
 	}
 
 }

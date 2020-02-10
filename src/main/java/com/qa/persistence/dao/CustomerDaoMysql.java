@@ -50,7 +50,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	}
 
 	@Override
-	public void update(long id, Customer customer) {
+	public void update(Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
@@ -69,7 +69,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			statement.executeUpdate(String.format("DELETE from customers WHERE id = %s;", customer.getId()));
+			statement.executeUpdate(String.format("DELETE from customers WHERE id = '%s';", customer.getId()));
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());

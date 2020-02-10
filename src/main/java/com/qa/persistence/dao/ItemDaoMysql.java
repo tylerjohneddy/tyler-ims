@@ -38,7 +38,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	}
 
 	@Override
-	public void update(long id, Item item) {
+	public void update(Item item) {
 		String sql = String.format("UPDATE items(name,value,quantity) set VALUES(%s,%s,%s) WHERE id=%s;", item.getId(),
 				item.getName(), item.getValue(), item.getInStock());
 		// new Mysql().update(sql);

@@ -47,7 +47,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a the new quanitity:");
 		Long itemQuantity = Long.parseLong(Utils.getInput());
 
-		orderService.update(orderId, new Order(itemQuantity));
+		//orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
 
 	@Override

@@ -26,8 +26,8 @@ public class ItemServices implements CrudServices<Item> {
 	}
 
 	@Override
-	public void update(long id, Item item) {
-		itemDao.update(id, item);
+	public void update(Item item) {
+		itemDao.update(item);
 	}
 
 	@Override

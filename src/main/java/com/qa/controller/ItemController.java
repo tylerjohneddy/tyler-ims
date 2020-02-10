@@ -52,7 +52,7 @@ public class ItemController implements CrudController<Item> {
 		Double value = Double.parseDouble(Utils.getInput());
 		LOGGER.info("Please enter new stock count");
 		int inStock = Integer.parseInt(Utils.getInput());
-		itemService.update(id, new Item(name, value, inStock));
+		itemService.update(new Item(name, value, inStock));
 
 	}
 
