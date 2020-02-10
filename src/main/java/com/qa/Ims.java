@@ -23,7 +23,6 @@ public class Ims {
 
 	public void imsSystem() {
 		LOGGER.info("What is your username");
-		LOGGER.error("ahhhh");
 		Config.username = Utils.getInput();
 		LOGGER.info("What is your password");
 		Config.password = Utils.getInput();

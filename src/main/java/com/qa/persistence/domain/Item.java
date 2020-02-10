@@ -1,30 +1,34 @@
 package com.qa.persistence.domain;
 
 public class Item {
-	private int id;
+	private Long id;
 	private String name;
 	private double value;
 	private int inStock;
-	public Item(int id, String name, double value, int inStock) {
+
+	public Item(Long id, String name, double value, int inStock) {
 		this.id = id;
 		this.name = name;
 		this.value = value;
 		this.inStock = inStock;
 	}
+
 	public Item(String name, double value, int inStock) {
-		
+
 		this.name = name;
 		this.value = value;
 		this.inStock = inStock;
 	}
-	
-	
 
-	public int getId() {
+	public Item(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

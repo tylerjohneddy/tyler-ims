@@ -40,4 +40,10 @@ public class ItemDaoMysql implements Dao<Item> {
 		
 	}
 
+	@Override
+	public String readOne(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

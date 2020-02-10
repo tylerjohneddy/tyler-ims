@@ -33,16 +33,24 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	@Override
-	public void update(long id, Order t) {
+	public void update(long id, Order order) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Order t) {
+	public void delete(Order order) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String readOne(Order t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 

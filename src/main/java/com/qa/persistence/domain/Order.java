@@ -1,9 +1,9 @@
 package com.qa.persistence.domain;
 
 public class Order {
-	private int id;
+	private Long id;
 	private double cost;
-	private int customerId;
+	private Long customerId;
 	private int discount;
 
 	/**
@@ -12,7 +12,7 @@ public class Order {
 	 * @param customerId
 	 * @param discount
 	 */
-	public Order(int id, double cost, int customerId, int discount) {
+	public Order(Long id, double cost, Long customerId, int discount) {
 		this.id = id;
 		this.cost = cost;
 		this.customerId = customerId;
@@ -24,7 +24,7 @@ public class Order {
 	 * @param customerId
 	 * @param discount
 	 */
-	public Order(double cost, int customerId, int discount) {
+	public Order(double cost, Long customerId, int discount) {
 		
 
 		this.cost = cost;
@@ -32,17 +32,27 @@ public class Order {
 		this.discount = discount;
 	}
 
+	public Order(Long id, int discount) {
+		this.id = id;
+		this.discount = discount;
+	}
+
+	public Order(Long id) {
+		this.id = id;
+		
+	}
+
 	/**
 	 * @return
 	 */
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id
 	 */
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -63,14 +73,14 @@ public class Order {
 	/**
 	 * @return
 	 */
-	public int getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
 
 	/**
 	 * @param customerId
 	 */
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 

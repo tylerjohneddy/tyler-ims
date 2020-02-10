@@ -26,7 +26,7 @@ public class OrderServices implements CrudServices<Order> {
 
 	@Override
 	public void update(long id, Order order) {
-		orderDao.delete(order);
+		orderDao.update(id, order);
 		
 	}
 
@@ -34,6 +34,12 @@ public class OrderServices implements CrudServices<Order> {
 	public void delete(Order order) {
 		orderDao.delete(order);
 		
+	}
+
+	@Override
+	public String readOne(Order order) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

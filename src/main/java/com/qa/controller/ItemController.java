@@ -14,7 +14,6 @@ public class ItemController implements CrudController<Item> {
 	private CrudServices<Item> itemService;
 
 	public ItemController(CrudServices<Item> itemService) {
-		// TODO Auto-generated constructor stub
 		this.itemService = itemService;
 	}
 
@@ -25,14 +24,18 @@ public class ItemController implements CrudController<Item> {
 		}
 	}
 
+	public void readOne() {
+		Long id = Long.parseLong(Utils.getInput());
+		itemService.readOne(new Item(id));
+	}
+
 	@Override
 	public void create() {
-		// TODO Auto-generated method stub
 		LOGGER.info("Please enter a first name:");
 		String name = Utils.getInput();
 		LOGGER.info("Please enter a surname:");
 		double value = Double.parseDouble(Utils.getInput());
-		LOGGER.info("Please enter a surname:");
+		LOGGER.info("Please enter stock amount:");
 		int inStock = Integer.parseInt((Utils.getInput()));
 		itemService.create(new Item(name, value, inStock));
 		LOGGER.info("Customer created");
@@ -41,14 +44,25 @@ public class ItemController implements CrudController<Item> {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		LOGGER.info("Please Enter Customer ID to update:");
+		Long id = Long.parseLong(Utils.getInput());
+		LOGGER.info("Please enter a name:");
+		String name = Utils.getInput();
+		LOGGER.info("Please enter a surname:");
+		Double value = Double.parseDouble(Utils.getInput());
+		LOGGER.info("Please enter new stock count");
+		int inStock = Integer.parseInt(Utils.getInput());
+		itemService.update(id, new Item(name, value, inStock));
 
 	}
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
-
+		LOGGER.info("Please Enter Customer ID to delete:");
+		Long id = Long.parseLong(Utils.getInput());
+		LOGGER.info("Confirm deletion of : ");
+		itemService.delete(new Item(id));
 	}
+
 
 }

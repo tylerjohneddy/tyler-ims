@@ -5,6 +5,8 @@ import java.util.List;
 public interface CrudServices<T> {
 
     public List<String> readAll();
+    
+    public String readOne(T t);
      
     void create(T t);
      

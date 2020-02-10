@@ -2,17 +2,23 @@ package com.qa.utils;
 
 import java.sql.ResultSet;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import com.qa.controller.Action;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Utils {
+	public static final Logger LOGGER = Logger.getLogger(Utils.class);
 
 	public static String getInput() {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		return scanner.nextLine();
+		
 	}
 
 	public List<String> resultSetToArrayList(ResultSet rs) {
@@ -30,6 +36,7 @@ public class Utils {
 				results.add(row);
 			}
 		} catch (SQLException e) {
+			LOGGER.error(e.toString());
 			results.add("\nerror\n");
 		}
 		return results;

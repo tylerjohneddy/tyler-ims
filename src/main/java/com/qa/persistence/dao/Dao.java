@@ -5,6 +5,8 @@ import java.util.List;
 public interface Dao<T> {
 
     List<String> readAll();
+    
+    String readOne(T t);
      
     void create(T t);
      

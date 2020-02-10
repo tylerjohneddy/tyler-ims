@@ -44,10 +44,17 @@ public class CustomerController implements CrudController<Customer> {
 
 	public void delete() {
 		LOGGER.info("Please Enter Customer ID to delete:");
+		readOne();
 		Long id = Long.parseLong(Utils.getInput());
 		LOGGER.info("Confirm deletion of : ");
 		customerService.delete(new Customer(id));
 
 	}
+
+	public void readOne() {
+		Long id = Long.parseLong(Utils.getInput());		
+		customerService.readOne(new Customer(id));
+	}
+
 
 }

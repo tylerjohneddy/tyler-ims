@@ -31,4 +31,8 @@ public class CustomerServices implements CrudServices<Customer> {
 		
 	}
 
+	public String readOne(Customer customer) {
+		return customerDao.readOne(customer);
+	}
+
 }

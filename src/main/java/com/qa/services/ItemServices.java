@@ -35,4 +35,10 @@ public class ItemServices implements CrudServices<Item> {
 		itemDao.delete(item);
 	}
 
+	@Override
+	public String readOne(Item item) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
