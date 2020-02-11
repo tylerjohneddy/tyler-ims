@@ -24,10 +24,11 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("select * from customers");
+			ResultSet resultSet = statement.executeQuery("select * from customers;");
 			Utils utils = new Utils();
 			customer = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
+			LOGGER.info(e.toString());
 
 		}
 
@@ -44,7 +45,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
+			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
 	}
@@ -58,7 +59,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
+			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
 
@@ -73,7 +74,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
+			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
 
@@ -87,13 +88,6 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
-//			while (resultSet.next()) {
-//				Long id = resultSet.getLong("id");
-//				String firstName = resultSet.getString("first_name");
-//				String surname = resultSet.getString("surname");
-//				Customer customer = new Customer(id, firstName, surname);
-//				customers.add(customer);
-//			}
 			Utils utils = new Utils();
 			line = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {

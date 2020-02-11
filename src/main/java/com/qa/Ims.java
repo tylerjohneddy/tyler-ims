@@ -2,20 +2,11 @@ package com.qa;
 
 import org.apache.log4j.Logger;
 
-import com.qa.controller.Action;
-import com.qa.controller.CrudController;
-import com.qa.controller.CustomerController;
-import com.qa.controller.ItemController;
-import com.qa.controller.OrderController;
-import com.qa.persistence.dao.CustomerDaoMysql;
-import com.qa.persistence.dao.ItemDaoMysql;
-import com.qa.persistence.dao.OrderDaoMysql;
+import com.qa.controller.*;
+import com.qa.persistence.dao.*;
 import com.qa.persistence.domain.Domain;
-import com.qa.services.CustomerServices;
-import com.qa.services.ItemServices;
-import com.qa.services.OrderServices;
-import com.qa.utils.Config;
-import com.qa.utils.Utils;
+import com.qa.services.*;
+
 
 public class Ims {
 
@@ -23,9 +14,9 @@ public class Ims {
 
 	public void imsSystem() {
 		LOGGER.info("What is your username");
-		Config.username = Utils.getInput();
+		//Config.username = Utils.getInput();
 		LOGGER.info("What is your password");
-		Config.password = Utils.getInput();
+		//Config.password = Utils.getInput();
 
 		LOGGER.info("Which entity would you like to use?");
 		Domain.printDomains();

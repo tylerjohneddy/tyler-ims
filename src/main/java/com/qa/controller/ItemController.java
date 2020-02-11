@@ -2,10 +2,8 @@ package com.qa.controller;
 
 import org.apache.log4j.Logger;
 
-import com.qa.persistence.domain.Customer;
 import com.qa.persistence.domain.Item;
 import com.qa.services.CrudServices;
-import com.qa.services.ItemServices;
 import com.qa.utils.Utils;
 
 public class ItemController implements CrudController<Item> {
@@ -31,38 +29,41 @@ public class ItemController implements CrudController<Item> {
 
 	@Override
 	public void create() {
-		LOGGER.info("Please enter a first name:");
+		LOGGER.info("Please enter a name of item:");
 		String name = Utils.getInput();
-		LOGGER.info("Please enter a surname:");
+		LOGGER.info("Please enter an item value:");
 		double value = Double.parseDouble(Utils.getInput());
 		LOGGER.info("Please enter stock amount:");
 		int inStock = Integer.parseInt((Utils.getInput()));
 		itemService.create(new Item(name, value, inStock));
-		LOGGER.info("Customer created");
+		LOGGER.info("Item created");
 
 	}
 
 	@Override
 	public void update() {
-		LOGGER.info("Please Enter Customer ID to update:");
-		Long id = Long.parseLong(Utils.getInput());
-		LOGGER.info("Please enter a name:");
-		String name = Utils.getInput();
-		LOGGER.info("Please enter a surname:");
-		Double value = Double.parseDouble(Utils.getInput());
-		LOGGER.info("Please enter new stock count");
-		int inStock = Integer.parseInt(Utils.getInput());
-		itemService.update(new Item(name, value, inStock));
+		try {
+			LOGGER.info("Please Enter Item ID to update:");
+			Long id = Long.parseLong(Utils.getInput());
+			LOGGER.info("Please enter a name:");
+			String name = Utils.getInput();
+			LOGGER.info("Please enter a value:");
+			Double value = Double.parseDouble(Utils.getInput());
+			LOGGER.info("Please enter new stock count");
+			int inStock = Integer.parseInt(Utils.getInput());
+			itemService.update(new Item(name, value, inStock));
+		} catch (NumberFormatException e) {
+			LOGGER.error(e.toString());
+			LOGGER.info("An error occured while completeing the action, please check the log files");
+		}
 
 	}
 
 	@Override
 	public void delete() {
-		LOGGER.info("Please Enter Customer ID to delete:");
+		LOGGER.info("Please Enter Item ID to delete:");
 		Long id = Long.parseLong(Utils.getInput());
-		LOGGER.info("Confirm deletion of : ");
 		itemService.delete(new Item(id));
 	}
-
 
 }

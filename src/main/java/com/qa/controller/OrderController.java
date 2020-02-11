@@ -17,8 +17,8 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public void readAll() {
-		for (String item : orderService.readAll()) {
-			LOGGER.info(item.toString());
+		for (String order : orderService.readAll()) {
+			LOGGER.info(order.toString());
 		}
 	}
 
