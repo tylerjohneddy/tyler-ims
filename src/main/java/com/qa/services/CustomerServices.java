@@ -24,8 +24,8 @@ public class CustomerServices implements CrudServices<Customer> {
 	}
 
 	@Override
-	public void update(Customer customer) {
-		customerDao.update(customer);
+	public Customer update(Customer customer) {
+		return customerDao.update(customer);
 
 	}
 

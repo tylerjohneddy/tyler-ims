@@ -6,6 +6,7 @@ public class Order {
 	private Long customerId;
 	private int discount;
 	private String dateTime;
+	private Long[][] item;
 
 	/**
 	 * @param id
@@ -46,9 +47,9 @@ public class Order {
 		this.discount = discount;
 	}
 
-	public Order(Long id, int discount) {
+	public Order(Long id, Long[][] item) {
 		this.id = id;
-		this.discount = discount;
+		this.item = item;
 	}
 
 	public Order(Long id) {
@@ -110,6 +111,14 @@ public class Order {
 	 */
 	public void setDiscount(int discount) {
 		this.discount = discount;
+	}
+
+	public Long[][] getItem() {
+		return item;
+	}
+
+	public void setItem(Long[][] item) {
+		this.item = item;
 	}
 
 }

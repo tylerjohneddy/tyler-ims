@@ -8,7 +8,7 @@ public interface CrudController<T> {
 
 	void create();
 
-	void update();
+	T update();
 
 	void delete();
 

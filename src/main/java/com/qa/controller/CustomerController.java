@@ -16,6 +16,10 @@ public class CustomerController implements CrudController<Customer> {
 		this.customerService = customerService;
 	}
 
+	public String getInput() {
+		return Utils.getInput();
+	}
+
 	@Override
 	public void readAll() {
 		for (String customer : customerService.readAll()) {
@@ -26,22 +30,23 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public void create() {
 		LOGGER.info("Please enter a first name:");
-		String firstName = Utils.getInput();
+		String firstName = getInput();
 		LOGGER.info("Please enter a surname:");
-		String surname = Utils.getInput();
+		String surname = getInput();
 		customerService.create(new Customer(firstName, surname));
 		LOGGER.info("Customer created");
 	}
 
 	@Override
-	public void update() {
+	public Customer update() {
 		LOGGER.info("Please Enter Customer ID to update:");
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		LOGGER.info("Please enter a first name:");
-		String firstName = Utils.getInput();
+		String firstName = getInput();
 		LOGGER.info("Please enter a surname:");
-		String surname = Utils.getInput();
-		customerService.update(new Customer(id, firstName, surname));
+		String surname = getInput();
+		Customer customer = customerService.update(new Customer(id, firstName, surname));
+		return customer;
 
 	}
 
@@ -50,14 +55,14 @@ public class CustomerController implements CrudController<Customer> {
 		LOGGER.info("Please Enter Customer ID to delete:");
 		readOne();
 		LOGGER.info("To Confirm Please Enter Customer ID again to delete:");
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		customerService.delete(new Customer(id));
 
 	}
 
 	@Override
 	public void readOne() {
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		customerService.readOne(new Customer(id));
 
 	}

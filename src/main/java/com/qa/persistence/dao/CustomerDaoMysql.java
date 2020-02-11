@@ -51,7 +51,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	}
 
 	@Override
-	public void update(Customer customer) {
+	public Customer update(Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
@@ -62,6 +62,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
+		return null;
 
 	}
 
@@ -89,7 +90,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			ResultSet resultSet = statement
 
 					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
-			ResultSet temp = resultSet;
+//			ResultSet temp = resultSet;
 			Utils utils = new Utils();
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				LOGGER.info(row);

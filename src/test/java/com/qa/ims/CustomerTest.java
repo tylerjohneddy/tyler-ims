@@ -1,4 +1,4 @@
-package com.qa.test;
+package com.qa.ims;
 
 import static org.junit.Assert.assertEquals;
 

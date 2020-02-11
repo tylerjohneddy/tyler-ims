@@ -24,6 +24,9 @@ public class OrderDaoMysql implements Dao<Order> {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()));
+			for (int i = 0; i >= order.getItem().length; i++) {
+
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
@@ -51,24 +54,41 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	@Override
-	public void update(Order order) {
+	public Order update(Order order) {
+		return null;
 
 	}
 
 	@Override
 	public void delete(Order order) {
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+				Config.username, Config.password)) {
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
+			statement.executeUpdate(String.format("DELETE from order WHERE order_id = '%s';", order.getId()));
+
+		} catch (Exception e) {
+			LOGGER.error(e.toString());
+			LOGGER.info("An error occured while completing the action, please check the log files");
+
+		}
 
 	}
 
 	@Override
 	public void readOne(Order order) {
-		Order returnedOrder = null;
+		// Order returnedOrder = null;
 
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
+			Utils utils = new Utils();
+			for (String row : utils.resultSetToArrayList(resultSet)) {
+				LOGGER.info(row);
+			}
 //			while (resultSet.next()) {
 //				Long id = resultSet.getLong("id");
 //				Double cost = resultSet.getDouble("cost");

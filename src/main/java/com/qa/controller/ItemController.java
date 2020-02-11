@@ -22,6 +22,7 @@ public class ItemController implements CrudController<Item> {
 		}
 	}
 
+	@Override
 	public void readOne() {
 		Long id = Long.parseLong(Utils.getInput());
 		itemService.readOne(new Item(id));
@@ -41,7 +42,7 @@ public class ItemController implements CrudController<Item> {
 	}
 
 	@Override
-	public void update() {
+	public Item update() {
 		try {
 			LOGGER.info("Please Enter Item ID to update:");
 			Long id = Long.parseLong(Utils.getInput());
@@ -56,6 +57,7 @@ public class ItemController implements CrudController<Item> {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 		}
+		return null;
 
 	}
 
