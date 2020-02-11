@@ -8,8 +8,8 @@ import com.qa.persistence.domain.Order;
 public class OrderServices implements CrudServices<Order> {
 	Dao<Order> orderDao;
 
-	public OrderServices(Dao<Order> OrderDao) {
-		this.orderDao = OrderDao;
+	public OrderServices(Dao<Order> orderDao) {
+		this.orderDao = orderDao;
 	}
 
 	@Override

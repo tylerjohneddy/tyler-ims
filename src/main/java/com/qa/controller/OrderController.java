@@ -24,7 +24,7 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public void readAll() {
 		for (String order : orderService.readAll()) {
-			LOGGER.info(order.toString());
+			LOGGER.info(order);
 		}
 	}
 
@@ -40,7 +40,7 @@ public class OrderController implements CrudController<Order> {
 		Long customerId = Long.parseLong(getInput());
 		Long[][] item = null;
 		Long itemId = null;
-		int itemQuantity = 0;
+		Long itemQuantity = 0L;
 
 		for (Long i = 1L; i != -1; i = Long.parseLong(getInput())) {
 			LOGGER.info("Please enter a the item ID to add:");
@@ -48,6 +48,8 @@ public class OrderController implements CrudController<Order> {
 			itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item ID to add:");
 			itemId = Long.parseLong(getInput());
+			LOGGER.info("Please enter a the item  to quantity add:");
+			itemQuantity = Long.parseLong(getInput());
 
 		}
 		orderService.create(new Order(customerId, item));

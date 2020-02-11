@@ -25,6 +25,7 @@ public class OrderDaoMysql implements Dao<Order> {
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()));
 			for (int i = 0; i >= order.getItem().length; i++) {
+				break;
 
 			}
 

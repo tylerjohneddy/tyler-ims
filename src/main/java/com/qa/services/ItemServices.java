@@ -9,8 +9,8 @@ public class ItemServices implements CrudServices<Item> {
 
 	Dao<Item> itemDao;
 
-	public ItemServices(Dao<Item> ItemDao) {
-		this.itemDao = ItemDao;
+	public ItemServices(Dao<Item> itemDao) {
+		this.itemDao = itemDao;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ItemServices implements CrudServices<Item> {
 
 	@Override
 	public void readOne(Item item) {
-		// TODO Auto-generated method stub
+		itemDao.readOne(item);
 	}
 
 }
