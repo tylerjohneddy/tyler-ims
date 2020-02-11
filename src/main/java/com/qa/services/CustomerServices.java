@@ -19,8 +19,8 @@ public class CustomerServices implements CrudServices<Customer> {
 	}
 
 	@Override
-	public void create(Customer customer) {
-		customerDao.create(customer);
+	public Customer create(Customer customer) {
+		return customerDao.create(customer);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 
 	@Override
-	public void create(Item item) {
+	public Item create(Item item) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
@@ -28,6 +28,7 @@ public class ItemDaoMysql implements Dao<Item> {
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 
 		}
+		return null;
 
 	}
 

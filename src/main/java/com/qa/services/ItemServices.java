@@ -19,8 +19,8 @@ public class ItemServices implements CrudServices<Item> {
 	}
 
 	@Override
-	public void create(Item item) {
-		itemDao.create(item);
+	public Item create(Item item) {
+		return itemDao.create(item);
 
 	}
 

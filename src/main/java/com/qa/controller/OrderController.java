@@ -17,6 +17,10 @@ public class OrderController implements CrudController<Order> {
 		this.orderService = orderService;
 	}
 
+	public String getInput() {
+		return Utils.getInput();
+	}
+
 	@Override
 	public void readAll() {
 		for (String order : orderService.readAll()) {
@@ -26,28 +30,29 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public void readOne() {
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		orderService.readOne(new Order(id));
 	}
 
 	@Override
-	public void create() {
+	public Order create() {
 		LOGGER.info("Please enter a the customers ID:");
-		Long customerId = Long.parseLong(Utils.getInput());
+		Long customerId = Long.parseLong(getInput());
 		Long[][] item = null;
 		Long itemId = null;
 		int itemQuantity = 0;
 
-		for (Long i = 1L; i != -1; i = Long.parseLong(Utils.getInput())) {
+		for (Long i = 1L; i != -1; i = Long.parseLong(getInput())) {
 			LOGGER.info("Please enter a the item ID to add:");
-			itemId = Long.parseLong(Utils.getInput());
+			itemId = Long.parseLong(getInput());
 			itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item ID to add:");
-			itemId = Long.parseLong(Utils.getInput());
+			itemId = Long.parseLong(getInput());
 
 		}
 		orderService.create(new Order(customerId, item));
 		LOGGER.info("Order created");
+		return null;
 
 		// "INSERT INTO item_order VALUES(null,order_id,item_id,quantity);"
 	}
@@ -55,11 +60,11 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public Order update() {
 		LOGGER.info("Please enter a the order ID:");
-		Long orderId = Long.parseLong(Utils.getInput());
+		Long orderId = Long.parseLong(getInput());
 		LOGGER.info("Please enter a the item ID:");
-		Long itemId = Long.parseLong(Utils.getInput());
+		Long itemId = Long.parseLong(getInput());
 		LOGGER.info("Please enter a the new quanitity:");
-		Long itemQuantity = Long.parseLong(Utils.getInput());
+		Long itemQuantity = Long.parseLong(getInput());
 		return null;
 
 		// orderService.update(new Order(orderId,itemId,itemQuantity));
@@ -68,10 +73,10 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Order ID to delete:");
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		LOGGER.info("Confirm deletion of : ");
 		orderService.readOne(new Order(id));
-		if (id == Long.parseLong(Utils.getInput())) {
+		if (id == Long.parseLong(getInput())) {
 			orderService.delete(new Order(id));
 		}
 	}

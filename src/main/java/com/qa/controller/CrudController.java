@@ -6,7 +6,7 @@ public interface CrudController<T> {
 
 	void readOne();
 
-	void create();
+	T create();
 
 	T update();
 

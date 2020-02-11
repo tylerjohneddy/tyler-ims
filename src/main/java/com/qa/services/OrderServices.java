@@ -18,8 +18,8 @@ public class OrderServices implements CrudServices<Order> {
 	}
 
 	@Override
-	public void create(Order order) {
-		orderDao.create(order);
+	public Order create(Order order) {
+		return orderDao.create(order);
 	}
 
 	@Override

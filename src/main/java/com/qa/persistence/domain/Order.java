@@ -1,5 +1,7 @@
 package com.qa.persistence.domain;
 
+import java.util.Arrays;
+
 public class Order {
 	private Long id;
 	private double cost;
@@ -47,11 +49,18 @@ public class Order {
 		this.discount = discount;
 	}
 
+	/**
+	 * @param id
+	 * @param item
+	 */
 	public Order(Long id, Long[][] item) {
 		this.id = id;
 		this.item = item;
 	}
 
+	/**
+	 * @param id
+	 */
 	public Order(Long id) {
 		this.id = id;
 
@@ -113,12 +122,63 @@ public class Order {
 		this.discount = discount;
 	}
 
+	/**
+	 * @return
+	 */
 	public Long[][] getItem() {
 		return item;
 	}
 
 	public void setItem(Long[][] item) {
 		this.item = item;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(cost);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
+		result = prime * result + discount;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + Arrays.deepHashCode(item);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (Double.doubleToLongBits(cost) != Double.doubleToLongBits(other.cost))
+			return false;
+		if (customerId == null) {
+			if (other.customerId != null)
+				return false;
+		} else if (!customerId.equals(other.customerId))
+			return false;
+		if (dateTime == null) {
+			if (other.dateTime != null)
+				return false;
+		} else if (!dateTime.equals(other.dateTime))
+			return false;
+		if (discount != other.discount)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (!Arrays.deepEquals(item, other.item))
+			return false;
+		return true;
 	}
 
 }

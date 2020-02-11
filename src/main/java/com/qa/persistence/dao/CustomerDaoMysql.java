@@ -36,7 +36,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	}
 
 	@Override
-	public void create(Customer customer) {
+	public Customer create(Customer customer) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
@@ -48,6 +48,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
+		return null;
 	}
 
 	@Override

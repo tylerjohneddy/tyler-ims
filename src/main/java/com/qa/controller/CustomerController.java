@@ -28,13 +28,14 @@ public class CustomerController implements CrudController<Customer> {
 	}
 
 	@Override
-	public void create() {
+	public Customer create() {
 		LOGGER.info("Please enter a first name:");
 		String firstName = getInput();
 		LOGGER.info("Please enter a surname:");
 		String surname = getInput();
-		customerService.create(new Customer(firstName, surname));
+		Customer customer = customerService.create(new Customer(firstName, surname));
 		LOGGER.info("Customer created");
+		return customer;
 	}
 
 	@Override

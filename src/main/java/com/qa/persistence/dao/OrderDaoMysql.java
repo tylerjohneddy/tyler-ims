@@ -17,7 +17,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 
 	@Override
-	public void create(Order order) {
+	public Order create(Order order) {
 
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
@@ -33,6 +33,7 @@ public class OrderDaoMysql implements Dao<Order> {
 			LOGGER.info("An error occured while completing the action, please check the log files");
 
 		}
+		return null;
 
 	}
 

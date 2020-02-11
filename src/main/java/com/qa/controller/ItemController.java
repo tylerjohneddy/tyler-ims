@@ -15,6 +15,10 @@ public class ItemController implements CrudController<Item> {
 		this.itemService = itemService;
 	}
 
+	public String getInput() {
+		return getInput();
+	}
+
 	@Override
 	public void readAll() {
 		for (String item : itemService.readAll()) {
@@ -24,20 +28,21 @@ public class ItemController implements CrudController<Item> {
 
 	@Override
 	public void readOne() {
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		itemService.readOne(new Item(id));
 	}
 
 	@Override
-	public void create() {
+	public Item create() {
 		LOGGER.info("Please enter a name of item:");
-		String name = Utils.getInput();
+		String name = getInput();
 		LOGGER.info("Please enter an item value:");
-		double value = Double.parseDouble(Utils.getInput());
+		double value = Double.parseDouble(getInput());
 		LOGGER.info("Please enter stock amount:");
-		int inStock = Integer.parseInt((Utils.getInput()));
-		itemService.create(new Item(name, value, inStock));
+		int inStock = Integer.parseInt((getInput()));
+		Item item = itemService.create(new Item(name, value, inStock));
 		LOGGER.info("Item created");
+		return item;
 
 	}
 
@@ -45,13 +50,13 @@ public class ItemController implements CrudController<Item> {
 	public Item update() {
 		try {
 			LOGGER.info("Please Enter Item ID to update:");
-			Long id = Long.parseLong(Utils.getInput());
+			Long id = Long.parseLong(getInput());
 			LOGGER.info("Please enter a name:");
 			String name = Utils.getInput();
 			LOGGER.info("Please enter a value:");
-			Double value = Double.parseDouble(Utils.getInput());
+			Double value = Double.parseDouble(getInput());
 			LOGGER.info("Please enter new stock count");
-			int inStock = Integer.parseInt(Utils.getInput());
+			int inStock = Integer.parseInt(getInput());
 			itemService.update(new Item(name, value, inStock));
 		} catch (NumberFormatException e) {
 			LOGGER.error(e.toString());
@@ -64,7 +69,7 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Item ID to delete:");
-		Long id = Long.parseLong(Utils.getInput());
+		Long id = Long.parseLong(getInput());
 		itemService.delete(new Item(id));
 	}
 

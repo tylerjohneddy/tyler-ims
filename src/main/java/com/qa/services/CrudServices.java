@@ -8,7 +8,7 @@ public interface CrudServices<T> {
 
 	void readOne(T t);
 
-	void create(T t);
+	T create(T t);
 
 	T update(T t);
 
