@@ -21,7 +21,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public Item create(Item item) {
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
@@ -42,8 +42,8 @@ public class ItemDaoMysql implements Dao<Item> {
 		List<String> item = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM items;");
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM items;");
 			Utils utils = new Utils();
 			item = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
@@ -58,7 +58,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public Item update(Item item) {
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(
@@ -77,7 +77,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void delete(Item item) {
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
@@ -94,7 +94,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void readOne(Item item) {
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement
