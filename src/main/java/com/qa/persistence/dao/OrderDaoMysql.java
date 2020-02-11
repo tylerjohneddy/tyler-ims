@@ -22,12 +22,12 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order create(Order order) {
 
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()));
-			for (int i = 0; i >= order.getItem().length; i++) {
+			for (int i = 0; i >= order.getItem().length;) {
 				break;
 
 			}
@@ -46,7 +46,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public List<String> readAll() {
 		List<String> order = null;
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery("select * from orders;");
@@ -70,7 +70,7 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public void delete(Order order) {
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 
@@ -90,7 +90,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public void readOne(Order order) {
 
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+		try (Connection connection = DriverManager.getConnection(Config.url,
 				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement
