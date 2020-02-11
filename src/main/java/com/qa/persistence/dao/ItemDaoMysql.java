@@ -15,9 +15,9 @@ import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
 public class ItemDaoMysql implements Dao<Item> {
-	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
-	private static Statement statement = null;
-	private static ResultSet resultSet = null;
+	private final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
+	private Statement statement = null;
+	private ResultSet resultSet = null;
 
 	@Override
 	public Item create(Item item) {
@@ -27,8 +27,8 @@ public class ItemDaoMysql implements Dao<Item> {
 			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
 					item.getValue(), item.getInStock()));
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
+			Utils.errorPrint(e);
+	
 
 		}finally {
 			close();
@@ -47,8 +47,7 @@ public class ItemDaoMysql implements Dao<Item> {
 			Utils utils = new Utils();
 			item = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-
+			Utils.errorPrint(e);
 		}finally {
 			close();
 		}
@@ -65,9 +64,7 @@ public class ItemDaoMysql implements Dao<Item> {
 					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
 							item.getName(), item.getValue(), item.getInStock(), item.getId()));
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
-
+			Utils.errorPrint(e);
 		}finally {
 			close();
 		}
@@ -83,9 +80,7 @@ public class ItemDaoMysql implements Dao<Item> {
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
-
+			Utils.errorPrint(e);
 		}finally {
 			close();
 		}
@@ -104,9 +99,7 @@ public class ItemDaoMysql implements Dao<Item> {
 				LOGGER.info(row);
 			}
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
-
+			Utils.errorPrint(e);
 
 		}finally {
 			close();
@@ -118,8 +111,8 @@ public class ItemDaoMysql implements Dao<Item> {
 			if (statement != null)
 				statement.close();
 
-		} catch (SQLException se2) {
-			se2.printStackTrace();
+		} catch (SQLException e) {
+			Utils.errorPrint(e);
 		} // nothing we can do
 		try {
 
@@ -127,9 +120,9 @@ public class ItemDaoMysql implements Dao<Item> {
 
 				resultSet.close();
 
-		} catch (SQLException se) {
+		} catch (SQLException e) {
 
-			se.printStackTrace();
+			Utils.errorPrint(e);
 
 		} // end finally try
 

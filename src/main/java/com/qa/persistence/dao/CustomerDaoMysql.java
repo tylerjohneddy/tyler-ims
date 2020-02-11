@@ -15,26 +15,24 @@ import com.qa.utils.Utils;
 
 public class CustomerDaoMysql implements Dao<Customer> {
 
-	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
-	private static Statement statement = null;
-	private static ResultSet resultSet = null;
+	private final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
+	private Statement statement = null;
+	private ResultSet resultSet = null;
 
 	@Override
 	public List<String> readAll() {
 		List<String> customer = null;
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from customers;");
 			Utils utils = new Utils();
 			customer = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
-			LOGGER.info(e.toString());
+			Utils.errorPrint(e);
 
 		} finally {
 			close();
 
-			
 		}
 
 		return customer;
@@ -42,17 +40,15 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public Customer create(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO customers values(null,'%s','%s');",
 					customer.getFirstName(), customer.getSurname()));
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completing the action, please check the log files");
+			Utils.errorPrint(e);
 
-		}finally {
+		} finally {
 			close();
 		}
 		return null;
@@ -60,16 +56,13 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public Customer update(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("UPDATE customers set forename = '%s', surname = '%s' WHERE id=%s;",
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completing the action, please check the log files");
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 		return null;
@@ -78,16 +71,13 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public void delete(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE from customers WHERE id = '%s';", customer.getId()));
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completing the action, please check the log files");
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 
@@ -95,8 +85,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public void readOne(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement
 
@@ -106,23 +95,22 @@ public class CustomerDaoMysql implements Dao<Customer> {
 				LOGGER.info(row);
 			}
 
-
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 
 	}
+
 	public void close() {
 		try {
 
 			if (statement != null)
 				statement.close();
 
-		} catch (SQLException se2) {
-			se2.printStackTrace();
+		} catch (SQLException e) {
+			Utils.errorPrint(e);
 		} // nothing we can do
 		try {
 
@@ -130,9 +118,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 				resultSet.close();
 
-		} catch (SQLException se) {
+		} catch (SQLException e) {
 
-			se.printStackTrace();
+			Utils.errorPrint(e);
 
 		} // end finally try
 
