@@ -3,6 +3,7 @@ package com.qa.persistence.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -15,18 +16,22 @@ import com.qa.utils.Utils;
 
 public class ItemDaoMysql implements Dao<Item> {
 	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
+	private static Statement statement = null;
+	private static ResultSet resultSet = null;
 
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
 					item.getValue(), item.getInStock()));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 
+		}finally {
+			close();
 		}
 		return null;
 
@@ -44,6 +49,8 @@ public class ItemDaoMysql implements Dao<Item> {
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 
+		}finally {
+			close();
 		}
 
 		return item;
@@ -53,7 +60,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	public Item update(Item item) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(
 					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
 							item.getName(), item.getValue(), item.getInStock(), item.getId()));
@@ -61,6 +68,8 @@ public class ItemDaoMysql implements Dao<Item> {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 
+		}finally {
+			close();
 		}
 		return item;
 
@@ -70,13 +79,15 @@ public class ItemDaoMysql implements Dao<Item> {
 	public void delete(Item item) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
-			Statement statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 
+		}finally {
+			close();
 		}
 
 	}
@@ -85,8 +96,8 @@ public class ItemDaoMysql implements Dao<Item> {
 	public void readOne(Item item) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement
+			statement = connection.createStatement();
+			resultSet = statement
 					.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
 			Utils utils = new Utils();
 			for (String row : utils.resultSetToArrayList(resultSet)) {
@@ -97,7 +108,31 @@ public class ItemDaoMysql implements Dao<Item> {
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 
 
+		}finally {
+			close();
 		}
+	}
+	public void close() {
+		try {
+
+			if (statement != null)
+				statement.close();
+
+		} catch (SQLException se2) {
+			se2.printStackTrace();
+		} // nothing we can do
+		try {
+
+			if (resultSet != null)
+
+				resultSet.close();
+
+		} catch (SQLException se) {
+
+			se.printStackTrace();
+
+		} // end finally try
+
 	}
 
 }
