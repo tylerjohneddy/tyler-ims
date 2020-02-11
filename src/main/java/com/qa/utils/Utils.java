@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class Utils {
-	public static final Logger LOGGER = Logger.getLogger(Utils.class);
+	public static final Logger logger = Logger.getLogger(Utils.class);
 
 	public static String getInput() {
 		@SuppressWarnings("resource")
@@ -43,7 +43,7 @@ public class Utils {
 
 			}
 		} catch (SQLException e) {
-			LOGGER.error(e.toString());
+			logger.error(e.toString());
 			results.add("\nerror\n");
 		}
 		results.add(StringUtils.repeat("_", results.get(0).length()));
@@ -51,8 +51,8 @@ public class Utils {
 	}
 
 	public static void errorPrint(Exception e) {
-		LOGGER.error(e.toString());
-		LOGGER.info("An error occured while completeing the action, please check the log files");
+		logger.error(e.toString());
+		logger.info("An error occured while completeing the action, please check the log files");
 	}
 	
 	public void close(Statement statement, ResultSet resultSet) {
