@@ -1,5 +1,9 @@
 package com.qa.utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class Config {
 
 	public static String username;

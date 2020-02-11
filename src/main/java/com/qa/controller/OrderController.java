@@ -7,20 +7,33 @@ import com.qa.persistence.domain.Order;
 import com.qa.services.CrudServices;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
 	private CrudServices<Item> itemService;
 
+	/**
+	 * @param orderService
+	 */
 	public OrderController(CrudServices<Order> orderService) {
 		this.orderService = orderService;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getInput() {
 		return Utils.getInput();
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readAll() {
 		for (String order : orderService.readAll()) {
@@ -28,12 +41,18 @@ public class OrderController implements CrudController<Order> {
 		}
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne() {
 		Long id = Long.parseLong(getInput());
 		orderService.readOne(new Order(id));
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Order create() {
 		LOGGER.info("Please enter a the customers ID:");
@@ -59,6 +78,9 @@ public class OrderController implements CrudController<Order> {
 		// "INSERT INTO item_order VALUES(null,order_id,item_id,quantity);"
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Order update() {
 		LOGGER.info("Please enter a the order ID:");
@@ -72,6 +94,9 @@ public class OrderController implements CrudController<Order> {
 		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Order ID to delete:");

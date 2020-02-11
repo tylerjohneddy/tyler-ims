@@ -9,32 +9,50 @@ public class CustomerServices implements CrudServices<Customer> {
 
 	Dao<Customer> customerDao;
 
+	/**
+	 * @param customerDao
+	 */
 	public CustomerServices(Dao<Customer> customerDao) {
 		this.customerDao = customerDao;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public List<String> readAll() {
 		return customerDao.readAll();
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer create(Customer customer) {
 		return customerDao.create(customer);
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer update(Customer customer) {
 		return customerDao.update(customer);
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete(Customer customer) {
 		customerDao.delete(customer);
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne(Customer customer) {
 		customerDao.readOne(customer);

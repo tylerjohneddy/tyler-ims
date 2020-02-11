@@ -1,11 +1,21 @@
 package com.qa.persistence.domain;
 
+/**
+ * @author Tyler
+ *
+ */
 public class Item {
 	private Long id;
 	private String name;
 	private double value;
 	private int inStock;
 
+	/**
+	 * @param id
+	 * @param name
+	 * @param value
+	 * @param inStock
+	 */
 	public Item(Long id, String name, double value, int inStock) {
 		this.id = id;
 		this.name = name;
@@ -13,6 +23,11 @@ public class Item {
 		this.inStock = inStock;
 	}
 
+	/**
+	 * @param name
+	 * @param value
+	 * @param inStock
+	 */
 	public Item(String name, double value, int inStock) {
 
 		this.name = name;
@@ -20,42 +35,72 @@ public class Item {
 		this.inStock = inStock;
 	}
 
+	/**
+	 * @param id
+	 */
 	public Item(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
 	public double getValue() {
 		return value;
 	}
 
+	/**
+	 * @param value
+	 */
 	public void setValue(double value) {
 		this.value = value;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getInStock() {
 		return inStock;
 	}
 
+	/**
+	 * @param inStock
+	 */
 	public void setInStock(int inStock) {
 		this.inStock = inStock;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,6 +114,9 @@ public class Item {
 		return result;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

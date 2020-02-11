@@ -6,19 +6,32 @@ import com.qa.persistence.domain.Item;
 import com.qa.services.CrudServices;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class ItemController implements CrudController<Item> {
 	public static final Logger LOGGER = Logger.getLogger(ItemController.class);
 
 	private CrudServices<Item> itemService;
 
+	/**
+	 * @param itemService
+	 */
 	public ItemController(CrudServices<Item> itemService) {
 		this.itemService = itemService;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getInput() {
 		return getInput();
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readAll() {
 		for (String item : itemService.readAll()) {
@@ -26,12 +39,18 @@ public class ItemController implements CrudController<Item> {
 		}
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne() {
 		Long id = Long.parseLong(getInput());
 		itemService.readOne(new Item(id));
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter a name of item:");
@@ -46,6 +65,9 @@ public class ItemController implements CrudController<Item> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Item update() {
 		try {
@@ -66,6 +88,9 @@ public class ItemController implements CrudController<Item> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Item ID to delete:");

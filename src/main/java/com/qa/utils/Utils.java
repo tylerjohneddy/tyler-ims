@@ -10,6 +10,10 @@ import java.util.Scanner;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * @author Tyler
+ *
+ */
 public class Utils {
 	public static final Logger logger = Logger.getLogger(Utils.class);
 
@@ -20,24 +24,28 @@ public class Utils {
 
 	}
 
-	public List<String> resultSetToArrayList(ResultSet rs) {
+	/**
+	 * @param resultSet
+	 * @return
+	 */
+	public List<String> resultSetToArrayList(ResultSet resultSet) {
 		List<String> results = new ArrayList<>();
 
 		try {
 			StringBuilder topRow = new StringBuilder();
-			for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+			for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
 				topRow.append(String.format("%1$-19s|",
-						StringUtils.center(rs.getMetaData().getColumnLabel(i).toUpperCase(), 19)));
+						StringUtils.center(resultSet.getMetaData().getColumnLabel(i).toUpperCase(), 19)));
 
 			}
 			results.add(StringUtils.repeat("_", topRow.length()));
 			results.add(topRow.toString());
 			results.add(StringUtils.repeat("-", topRow.length()));
 
-			while (rs.next()) {
+			while (resultSet.next()) {
 				StringBuilder row = new StringBuilder();
-				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-					row.append(String.format("%1$-19s|", StringUtils.center(rs.getString(i), 19)));
+				for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
+					row.append(String.format("%1$-19s|", StringUtils.center(resultSet.getString(i), 19)));
 				}
 				results.add(row.toString());
 
@@ -50,11 +58,18 @@ public class Utils {
 		return results;
 	}
 
+	/**
+	 * @param e
+	 */
 	public static void errorPrint(Exception e) {
 		logger.error(e.toString());
 		logger.info("An error occured while completeing the action, please check the log files");
 	}
 	
+	/**
+	 * @param statement
+	 * @param resultSet
+	 */
 	public void close(Statement statement, ResultSet resultSet) {
 		try {
 

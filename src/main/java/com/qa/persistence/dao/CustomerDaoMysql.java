@@ -12,6 +12,10 @@ import com.qa.persistence.domain.Customer;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class CustomerDaoMysql implements Dao<Customer> {
 
 	private final Logger logger = Logger.getLogger(CustomerDaoMysql.class);
@@ -19,6 +23,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
+	/**
+	 *
+	 */
 	@Override
 	public List<String> readAll() {
 		List<String> customer = null;
@@ -36,6 +43,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		return customer;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer create(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -51,6 +61,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		return null;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -65,6 +78,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -79,6 +95,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {

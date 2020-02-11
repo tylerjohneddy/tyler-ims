@@ -4,6 +4,10 @@ import org.apache.log4j.Logger;
 
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public enum Domain {
 
 	CUSTOMER("Information about customers"),
@@ -15,20 +19,32 @@ public enum Domain {
 
 	private String description;
 	
+	/**
+	 * @param description
+	 */
 	private Domain(String description) {
 		this.description = description;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String description() {
 		return String.format("%-10s : %-30s",this.name(),this.description);
 	}
 	
+	/**
+	 * 
+	 */
 	public static void printDomains() {
 		for (Domain domain : Domain.values()) {
 			LOGGER.info(domain.description());
 		}
 	}
 	
+	/**
+	 * @return
+	 */
 	public static Domain getDomain() {
 		Domain domain;
 		while (true) {

@@ -6,20 +6,33 @@ import com.qa.persistence.domain.Customer;
 import com.qa.services.CrudServices;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class CustomerController implements CrudController<Customer> {
 
 	public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 
 	private CrudServices<Customer> customerService;
 
+	/**
+	 * @param customerService
+	 */
 	public CustomerController(CrudServices<Customer> customerService) {
 		this.customerService = customerService;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getInput() {
 		return Utils.getInput();
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readAll() {
 		for (String customer : customerService.readAll()) {
@@ -27,6 +40,9 @@ public class CustomerController implements CrudController<Customer> {
 		}
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name:");
@@ -38,6 +54,9 @@ public class CustomerController implements CrudController<Customer> {
 		return customer;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Customer update() {
 		LOGGER.info("Please Enter Customer ID to update:");
@@ -51,6 +70,9 @@ public class CustomerController implements CrudController<Customer> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete() {
 		LOGGER.info("Please Enter Customer ID to delete:");
@@ -61,6 +83,9 @@ public class CustomerController implements CrudController<Customer> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne() {
 		Long id = Long.parseLong(getInput());

@@ -12,6 +12,10 @@ import com.qa.persistence.domain.Order;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class OrderDaoMysql implements Dao<Order> {
 
 	public static final Logger logger = Logger.getLogger(OrderDaoMysql.class);
@@ -19,6 +23,9 @@ public class OrderDaoMysql implements Dao<Order> {
 	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
+	/**
+	 *
+	 */
 	@Override
 	public Order create(Order order) {
 
@@ -41,6 +48,9 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public List<String> readAll() {
 		List<String> order = null;
@@ -57,12 +67,18 @@ public class OrderDaoMysql implements Dao<Order> {
 		return order;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Order update(Order order) {
 		return null;
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -79,6 +95,9 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne(Order order) {
 

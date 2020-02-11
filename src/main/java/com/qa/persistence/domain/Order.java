@@ -2,6 +2,10 @@ package com.qa.persistence.domain;
 
 import java.util.Arrays;
 
+/**
+ * @author Tyler
+ *
+ */
 public class Order {
 	private Long id;
 	private double cost;

@@ -12,12 +12,19 @@ import com.qa.persistence.domain.Item;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public class ItemDaoMysql implements Dao<Item> {
 	private final Logger logger = Logger.getLogger(ItemDaoMysql.class);
 	private Statement statement = null;
 	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
+	/**
+	 *
+	 */
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -34,6 +41,9 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public List<String> readAll() {
 		List<String> item = null;
@@ -51,6 +61,9 @@ public class ItemDaoMysql implements Dao<Item> {
 		return item;
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -67,6 +80,9 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void delete(Item item) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
@@ -81,6 +97,9 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	}
 
+	/**
+	 *
+	 */
 	@Override
 	public void readOne(Item item) {
 		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {

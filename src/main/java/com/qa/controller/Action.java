@@ -4,6 +4,10 @@ import org.apache.log4j.Logger;
 
 import com.qa.utils.Utils;
 
+/**
+ * @author Tyler
+ *
+ */
 public enum Action {
 
 	CREATE("To save a new item into the database"), READ("To read an item from the database"),
@@ -14,20 +18,32 @@ public enum Action {
 
 	private String description;
 
+	/**
+	 * @param description
+	 */
 	Action(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * @return
+	 */
 	public String description() {
 		return String.format("%-10s : %s", this.name(),this.description);
 	}
 
+	/**
+	 * 
+	 */
 	public static void printActions() {
 		for (Action action : Action.values()) {
 			LOGGER.info(action.description());
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public static Action getAction() {
 		Action action;
 		while (true) {
