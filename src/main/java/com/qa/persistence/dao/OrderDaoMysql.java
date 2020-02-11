@@ -18,6 +18,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 	private Statement statement = null;
 	private ResultSet resultSet = null;
+	private Utils utils = new Utils();
+
 
 	@Override
 	public Order create(Order order) {
@@ -35,8 +37,7 @@ public class OrderDaoMysql implements Dao<Order> {
 			Utils.errorPrint(e);
 
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 		return null;
 
 	}
@@ -52,8 +53,7 @@ public class OrderDaoMysql implements Dao<Order> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 
 		return order;
 	}
@@ -75,8 +75,7 @@ public class OrderDaoMysql implements Dao<Order> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 
 	}
 
@@ -93,31 +92,10 @@ public class OrderDaoMysql implements Dao<Order> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 
 	}
 
-	public void close() {
-		try {
 
-			if (statement != null)
-				statement.close();
-
-		} catch (SQLException e) {
-			Utils.errorPrint(e);
-		} // nothing we can do
-		try {
-
-			if (resultSet != null)
-
-				resultSet.close();
-
-		} catch (SQLException e) {
-
-			Utils.errorPrint(e);
-		} // end finally try
-
-	}
 
 }

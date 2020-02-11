@@ -2,6 +2,7 @@ package com.qa.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -52,6 +53,28 @@ public class Utils {
 	public static void errorPrint(Exception e) {
 		LOGGER.error(e.toString());
 		LOGGER.info("An error occured while completeing the action, please check the log files");
+	}
+	
+	public void close(Statement statement, ResultSet resultSet) {
+		try {
+
+			if (statement != null)
+				statement.close();
+
+		} catch (SQLException e) {
+			Utils.errorPrint(e);
+		} // nothing we can do
+		try {
+
+			if (resultSet != null)
+
+				resultSet.close();
+
+		} catch (SQLException e) {
+
+			Utils.errorPrint(e);
+		} // end finally try
+
 	}
 
 }

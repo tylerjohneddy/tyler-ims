@@ -3,13 +3,11 @@ package com.qa.persistence.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.controller.CustomerController;
 import com.qa.persistence.domain.Item;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
@@ -18,20 +16,19 @@ public class ItemDaoMysql implements Dao<Item> {
 	private final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 	private Statement statement = null;
 	private ResultSet resultSet = null;
+	private Utils utils = new Utils();
 
 	@Override
 	public Item create(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
 					item.getValue(), item.getInStock()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-	
 
-		}finally {
-			close();
+		} finally {
+			utils.close(statement, resultSet);
 		}
 		return null;
 
@@ -48,8 +45,8 @@ public class ItemDaoMysql implements Dao<Item> {
 			item = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		}finally {
-			close();
+		} finally {
+			utils.close(statement, resultSet);
 		}
 
 		return item;
@@ -57,16 +54,15 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public Item update(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(
 					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
 							item.getName(), item.getValue(), item.getInStock(), item.getId()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		}finally {
-			close();
+		} finally {
+			utils.close(statement, resultSet);
 		}
 		return item;
 
@@ -74,26 +70,23 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void delete(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		}finally {
-			close();
+		} finally {
+			utils.close(statement, resultSet);
 		}
 
 	}
 
 	@Override
 	public void readOne(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
-			resultSet = statement
-					.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
+			resultSet = statement.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
 			Utils utils = new Utils();
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				LOGGER.info(row);
@@ -101,31 +94,9 @@ public class ItemDaoMysql implements Dao<Item> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		}finally {
-			close();
+		} finally {
+			utils.close(statement, resultSet);
 		}
-	}
-	public void close() {
-		try {
-
-			if (statement != null)
-				statement.close();
-
-		} catch (SQLException e) {
-			Utils.errorPrint(e);
-		} // nothing we can do
-		try {
-
-			if (resultSet != null)
-
-				resultSet.close();
-
-		} catch (SQLException e) {
-
-			Utils.errorPrint(e);
-
-		} // end finally try
-
 	}
 
 }

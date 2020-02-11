@@ -3,7 +3,6 @@ package com.qa.persistence.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -18,6 +17,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	private final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
 	private Statement statement = null;
 	private ResultSet resultSet = null;
+	private Utils utils = new Utils();
 
 	@Override
 	public List<String> readAll() {
@@ -31,8 +31,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			Utils.errorPrint(e);
 
 		} finally {
-			close();
-
+			utils.close(statement,resultSet);
 		}
 
 		return customer;
@@ -49,8 +48,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			Utils.errorPrint(e);
 
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 		return null;
 	}
 
@@ -63,8 +61,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
-		}
+			utils.close(statement,resultSet);		}
 		return null;
 
 	}
@@ -78,7 +75,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
+			utils.close(statement, resultSet);
 		}
 
 	}
@@ -98,32 +95,11 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			close();
+
+			utils.close(statement, resultSet);
 		}
 
 	}
 
-	public void close() {
-		try {
-
-			if (statement != null)
-				statement.close();
-
-		} catch (SQLException e) {
-			Utils.errorPrint(e);
-		} // nothing we can do
-		try {
-
-			if (resultSet != null)
-
-				resultSet.close();
-
-		} catch (SQLException e) {
-
-			Utils.errorPrint(e);
-
-		} // end finally try
-
-	}
 
 }
