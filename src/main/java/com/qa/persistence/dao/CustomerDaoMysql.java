@@ -29,7 +29,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public List<String> readAll() {
 		List<String> customer = null;
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from customers;");
 			customer = utils.resultSetToArrayList(resultSet);
@@ -48,7 +48,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public Customer create(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO customers values(null,'%s','%s');",
 					customer.getFirstName(), customer.getSurname()));
@@ -66,7 +66,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public Customer update(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("UPDATE customers set forename = '%s', surname = '%s' WHERE id=%s;",
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
@@ -83,7 +83,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public void delete(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE from customers WHERE id = '%s';", customer.getId()));
 
@@ -100,7 +100,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public void readOne(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement
 

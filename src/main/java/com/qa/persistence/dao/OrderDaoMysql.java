@@ -29,7 +29,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order create(Order order) {
 
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()));
@@ -54,7 +54,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public List<String> readAll() {
 		List<String> order = null;
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from orders;");
 			order = utils.resultSetToArrayList(resultSet);
@@ -81,7 +81,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	 */
 	@Override
 	public void delete(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 
 			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
@@ -101,7 +101,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public void readOne(Order order) {
 
-		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
 			for (String row : utils.resultSetToArrayList(resultSet)) {

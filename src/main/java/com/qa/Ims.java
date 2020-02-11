@@ -16,9 +16,9 @@ public class Ims {
 
 	public void imsSystem() {
 		LOGGER.info("What is your username");
-		Config.username = Utils.getInput();
+		Config.setUsername(Utils.getInput());
 		LOGGER.info("What is your password");
-		Config.password = Utils.getInput();
+		Config.setPassword(Utils.getInput());
 
 		LOGGER.info("Which entity would you like to use?");
 		Domain.printDomains();
