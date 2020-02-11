@@ -52,8 +52,9 @@ public class ItemDaoMysql implements Dao<Item> {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			statement.executeUpdate(String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
-					item.getName(), item.getValue(), item.getInStock(), item.getId()));
+			statement.executeUpdate(
+					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
+							item.getName(), item.getValue(), item.getInStock(), item.getId()));
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
@@ -79,20 +80,24 @@ public class ItemDaoMysql implements Dao<Item> {
 	}
 
 	@Override
-	public String readOne(Item item) {
-		List<String> line = null;
+	public void readOne(Item item) {
+		Item returnedItem = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
-			Utils utils = new Utils();
-			line = utils.resultSetToArrayList(resultSet);
+//			while (resultSet.next()) {
+//				Long id = resultSet.getLong("id");
+//				String name = resultSet.getString("name");
+//				Double cost = resultSet.getDouble("cost");
+//				int inStock = resultSet.getInt("inStock");
+//				returnedItem = new Item(id, name, cost, inStock);
+//
+//			}
 		} catch (Exception e) {
 
 		}
-
-		return line.get(0);
 	}
 
 }

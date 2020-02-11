@@ -3,13 +3,11 @@ package com.qa.services;
 import java.util.List;
 
 import com.qa.persistence.dao.Dao;
-
 import com.qa.persistence.domain.Order;
-
 
 public class OrderServices implements CrudServices<Order> {
 	Dao<Order> orderDao;
-	
+
 	public OrderServices(Dao<Order> OrderDao) {
 		this.orderDao = OrderDao;
 	}
@@ -27,19 +25,19 @@ public class OrderServices implements CrudServices<Order> {
 	@Override
 	public void update(Order order) {
 		orderDao.update(order);
-		
+
 	}
 
 	@Override
 	public void delete(Order order) {
 		orderDao.delete(order);
-		
+
 	}
 
 	@Override
-	public String readOne(Order order) {
-		// TODO Auto-generated method stub
-		return null;
+	public void readOne(Order order) {
+		orderDao.readOne(order);
+
 	}
 
 }

@@ -4,31 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.controller.CustomerController;
 import com.qa.persistence.domain.Order;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
-
-
 public class OrderDaoMysql implements Dao<Order> {
-	
-	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 
+	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 
 	@Override
 	public void create(Order order) {
-		
+
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());", order.getCost(),
-					order.getCustomerId(), order.getDiscount()));
+			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
+					order.getCost(), order.getCustomerId(), order.getDiscount()));
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());
@@ -57,21 +52,36 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public void update(Order order) {
-		
+
 	}
 
 	@Override
 	public void delete(Order order) {
-		
+
 	}
 
 	@Override
-	public String readOne(Order t) {
-		return null;
+	public void readOne(Order order) {
+		Order returnedOrder = null;
+
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
+				Config.username, Config.password)) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
+//			while (resultSet.next()) {
+//				Long id = resultSet.getLong("id");
+//				Double cost = resultSet.getDouble("cost");
+//				Long customerId = resultSet.getLong("customer_id");
+//				int discount = resultSet.getInt("discount");
+//				String dateTime = resultSet.getString("date_time");
+//				returnedOrder = new Order(id, cost, customerId, discount, dateTime);
+//			}
+		} catch (Exception e) {
+			LOGGER.error(e.toString());
+
+		}
+
 	}
-
-
-
-
 
 }

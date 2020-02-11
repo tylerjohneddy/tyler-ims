@@ -47,7 +47,7 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a the new quanitity:");
 		Long itemQuantity = Long.parseLong(Utils.getInput());
 
-		//orderService.update(new Order(orderId,itemId,itemQuantity));
+		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
 
 	@Override
@@ -55,7 +55,10 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please Enter Customer ID to delete:");
 		Long id = Long.parseLong(Utils.getInput());
 		LOGGER.info("Confirm deletion of : ");
-		orderService.delete(new Order(id));
+		orderService.readOne(new Order(id));
+		if (id == Long.parseLong(Utils.getInput())) {
+			orderService.delete(new Order(id));
+		}
 	}
 
 }

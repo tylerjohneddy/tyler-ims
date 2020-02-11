@@ -5,6 +5,21 @@ public class Order {
 	private double cost;
 	private Long customerId;
 	private int discount;
+	private String dateTime;
+
+	/**
+	 * @param id
+	 * @param cost
+	 * @param customerId
+	 * @param discount
+	 */
+	public Order(Long id, double cost, Long customerId, int discount, String dateTime) {
+		this.id = id;
+		this.cost = cost;
+		this.customerId = customerId;
+		this.discount = discount;
+		this.dateTime = dateTime;
+	}
 
 	/**
 	 * @param id
@@ -25,7 +40,6 @@ public class Order {
 	 * @param discount
 	 */
 	public Order(double cost, Long customerId, int discount) {
-		
 
 		this.cost = cost;
 		this.customerId = customerId;
@@ -39,7 +53,7 @@ public class Order {
 
 	public Order(Long id) {
 		this.id = id;
-		
+
 	}
 
 	/**

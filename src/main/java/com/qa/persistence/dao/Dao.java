@@ -4,15 +4,14 @@ import java.util.List;
 
 public interface Dao<T> {
 
-    List<String> readAll();
-    
-    String readOne(T t);
-     
-    void create(T t);
-     
-    void update(T t);
-     
-    void delete(T t);
+	List<String> readAll();
+
+	void readOne(T t);
+
+	void create(T t);
+
+	void update(T t);
+
+	void delete(T t);
 
 }
-	

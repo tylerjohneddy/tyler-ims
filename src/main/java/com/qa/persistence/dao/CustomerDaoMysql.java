@@ -81,20 +81,33 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	}
 
 	@Override
-	public String readOne(Customer customer) {
-		List<String> line = null;
+	public void readOne(Customer customer) {
+		Customer returnedCustomer = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
+
 					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
+			ResultSet temp = resultSet;
 			Utils utils = new Utils();
-			line = utils.resultSetToArrayList(resultSet);
+			for (String row : utils.resultSetToArrayList(resultSet)) {
+				LOGGER.info(row);
+			}
+
+//			while (resultSet.next()) {
+//				Long id = resultSet.getLong("id");
+//				String firstName = resultSet.getString("forename");
+//				String surname = resultSet.getString("surname");
+//				returnedCustomer = new Customer(id, firstName, surname);
+//			}
+//			
+
 		} catch (Exception e) {
+			LOGGER.error(e.toString());
 
 		}
 
-		return line.get(0);
 	}
 
 }
