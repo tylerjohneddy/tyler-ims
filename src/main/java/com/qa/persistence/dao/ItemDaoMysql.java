@@ -20,7 +20,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public Item create(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.URL, Config.USERNAME, Config.PASSWORD)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
 					item.getValue(), item.getInStock()));
@@ -38,7 +38,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	public List<String> readAll() {
 		List<String> item = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
-				Config.USERNAME, Config.PASSWORD)) {
+				Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM items;");
 			item = utils.resultSetToArrayList(resultSet);
@@ -53,7 +53,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public Item update(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.URL, Config.USERNAME, Config.PASSWORD)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(
 					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
@@ -69,7 +69,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void delete(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.URL, Config.USERNAME, Config.PASSWORD)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
 
@@ -83,7 +83,7 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void readOne(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.URL, Config.USERNAME, Config.PASSWORD)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
 			for (String row : utils.resultSetToArrayList(resultSet)) {
