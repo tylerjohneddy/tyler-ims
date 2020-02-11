@@ -16,14 +16,13 @@ import com.qa.utils.Utils;
 public class OrderDaoMysql implements Dao<Order> {
 
 	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
-	private static Statement statement = null;
-	private static ResultSet resultSet = null;
+	private Statement statement = null;
+	private ResultSet resultSet = null;
 
 	@Override
 	public Order create(Order order) {
 
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()));
@@ -33,10 +32,9 @@ public class OrderDaoMysql implements Dao<Order> {
 			}
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completing the action, please check the log files");
+			Utils.errorPrint(e);
 
-		}finally {
+		} finally {
 			close();
 		}
 		return null;
@@ -46,16 +44,14 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public List<String> readAll() {
 		List<String> order = null;
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("select * from orders;");
+			resultSet = statement.executeQuery("select * from orders;");
 			Utils utils = new Utils();
 			order = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 
@@ -70,18 +66,15 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public void delete(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
 
 			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
 			statement.executeUpdate(String.format("DELETE from order WHERE order_id = '%s';", order.getId()));
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completing the action, please check the log files");
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 
@@ -90,31 +83,29 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public void readOne(Order order) {
 
-		try (Connection connection = DriverManager.getConnection(Config.url,
-				Config.username, Config.password)) {
+		try (Connection connection = DriverManager.getConnection(Config.url, Config.username, Config.password)) {
 			statement = connection.createStatement();
-			resultSet = statement
-					.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
+			resultSet = statement.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
 			Utils utils = new Utils();
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				LOGGER.info(row);
 			}
 		} catch (Exception e) {
-			LOGGER.error(e.toString());
-
-		}finally {
+			Utils.errorPrint(e);
+		} finally {
 			close();
 		}
 
 	}
+
 	public void close() {
 		try {
 
 			if (statement != null)
 				statement.close();
 
-		} catch (SQLException se2) {
-			se2.printStackTrace();
+		} catch (SQLException e) {
+			Utils.errorPrint(e);
 		} // nothing we can do
 		try {
 
@@ -122,10 +113,9 @@ public class OrderDaoMysql implements Dao<Order> {
 
 				resultSet.close();
 
-		} catch (SQLException se) {
+		} catch (SQLException e) {
 
-			se.printStackTrace();
-
+			Utils.errorPrint(e);
 		} // end finally try
 
 	}

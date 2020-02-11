@@ -49,4 +49,9 @@ public class Utils {
 		return results;
 	}
 
+	public static void errorPrint(Exception e) {
+		LOGGER.error(e.toString());
+		LOGGER.info("An error occured while completeing the action, please check the log files");
+	}
+
 }
