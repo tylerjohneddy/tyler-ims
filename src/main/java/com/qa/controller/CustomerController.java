@@ -23,7 +23,7 @@ public class CustomerController implements CrudController<Customer> {
 	@Override
 	public void readAll() {
 		for (String customer : customerService.readAll()) {
-			LOGGER.info(customer.toString());
+			LOGGER.info(customer);
 		}
 	}
 
@@ -46,8 +46,8 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = getInput();
 		LOGGER.info("Please enter a surname:");
 		String surname = getInput();
-		Customer customer = customerService.update(new Customer(id, firstName, surname));
-		return customer;
+		return customerService.update(new Customer(id, firstName, surname));
+		 
 
 	}
 

@@ -73,17 +73,17 @@ public class Customer {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
-			return false;
+				return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
+				return false;
 		if (surname == null) {
 			if (other.surname != null)
 				return false;
 		} else if (!surname.equals(other.surname))
-			return false;
+				return false;
 		return true;
 	}
 

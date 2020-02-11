@@ -14,7 +14,7 @@ import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
 public class ItemDaoMysql implements Dao<Item> {
-	public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
+	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 
 	@Override
 	public Item create(Item item) {
@@ -42,6 +42,7 @@ public class ItemDaoMysql implements Dao<Item> {
 			Utils utils = new Utils();
 			item = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
+			LOGGER.error(e.toString());
 
 		}
 
@@ -67,7 +68,6 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void delete(Item item) {
-		String sql = String.format("DELETE FROM items WHERE ID = %s;", item.getId());
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
@@ -83,21 +83,19 @@ public class ItemDaoMysql implements Dao<Item> {
 
 	@Override
 	public void readOne(Item item) {
-		Item returnedItem = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
-//			while (resultSet.next()) {
-//				Long id = resultSet.getLong("id");
-//				String name = resultSet.getString("name");
-//				Double cost = resultSet.getDouble("cost");
-//				int inStock = resultSet.getInt("inStock");
-//				returnedItem = new Item(id, name, cost, inStock);
-//
-//			}
+			Utils utils = new Utils();
+			for (String row : utils.resultSetToArrayList(resultSet)) {
+				LOGGER.info(row);
+			}
 		} catch (Exception e) {
+			LOGGER.error(e.toString());
+			LOGGER.info("An error occured while completeing the action, please check the log files");
+
 
 		}
 	}

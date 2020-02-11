@@ -23,22 +23,22 @@ public class Utils {
 		List<String> results = new ArrayList<>();
 
 		try {
-			String topRow = "";
+			StringBuilder topRow = new StringBuilder();
 			for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-				topRow += String.format("%1$-19s|",
-						StringUtils.center(rs.getMetaData().getColumnLabel(i).toUpperCase(), 19));
+				topRow.append(String.format("%1$-19s|",
+						StringUtils.center(rs.getMetaData().getColumnLabel(i).toUpperCase(), 19)));
 
 			}
 			results.add(StringUtils.repeat("_", topRow.length()));
-			results.add(topRow);
+			results.add(topRow.toString());
 			results.add(StringUtils.repeat("-", topRow.length()));
 
 			while (rs.next()) {
-				String row = "";
+				StringBuilder row = new StringBuilder();
 				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-					row += String.format("%1$-19s|", StringUtils.center(rs.getString(i), 19));
+					row.append(String.format("%1$-19s|", StringUtils.center(rs.getString(i), 19)));
 				}
-				results.add(row);
+				results.add(row.toString());
 
 			}
 		} catch (SQLException e) {

@@ -15,11 +15,10 @@ import com.qa.utils.Utils;
 
 public class CustomerDaoMysql implements Dao<Customer> {
 
-	public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
+	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
 
 	@Override
 	public List<String> readAll() {
-		// ArrayList<Customer> customers = new ArrayList<Customer>();
 		List<String> customer = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
@@ -84,26 +83,17 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 	@Override
 	public void readOne(Customer customer) {
-		Customer returnedCustomer = null;
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://35.230.149.143/inventory_management",
 				Config.username, Config.password)) {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 
 					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
-//			ResultSet temp = resultSet;
 			Utils utils = new Utils();
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				LOGGER.info(row);
 			}
 
-//			while (resultSet.next()) {
-//				Long id = resultSet.getLong("id");
-//				String firstName = resultSet.getString("forename");
-//				String surname = resultSet.getString("surname");
-//				returnedCustomer = new Customer(id, firstName, surname);
-//			}
-//			
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());

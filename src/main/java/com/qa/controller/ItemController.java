@@ -22,7 +22,7 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public void readAll() {
 		for (String item : itemService.readAll()) {
-			LOGGER.info(item.toString());
+			LOGGER.info(item);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class ItemController implements CrudController<Item> {
 			Double value = Double.parseDouble(getInput());
 			LOGGER.info("Please enter new stock count");
 			int inStock = Integer.parseInt(getInput());
-			itemService.update(new Item(name, value, inStock));
+			itemService.update(new Item(id, name, value, inStock));
 		} catch (NumberFormatException e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
