@@ -32,6 +32,7 @@ public class OrderServices implements CrudServices<Order> {
 	 */
 	@Override
 	public Order create(Order order) {
+
 		return orderDao.create(order);
 	}
 
@@ -57,8 +58,8 @@ public class OrderServices implements CrudServices<Order> {
 	 *
 	 */
 	@Override
-	public void readOne(Order order) {
-		orderDao.readOne(order);
+	public Order readOne(Order order) {
+		return orderDao.readOne(order);
 
 	}
 

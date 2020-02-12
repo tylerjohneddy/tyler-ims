@@ -26,7 +26,7 @@ public class ItemController implements CrudController<Item> {
 	 * @return
 	 */
 	public String getInput() {
-		return getInput();
+		return Utils.getInput();
 	}
 
 	/**
@@ -43,9 +43,9 @@ public class ItemController implements CrudController<Item> {
 	 *
 	 */
 	@Override
-	public void readOne() {
-		Long id = Long.parseLong(getInput());
-		itemService.readOne(new Item(id));
+	public Item readOne(Item item) {
+
+		return itemService.readOne(new Item(item.getId()));
 	}
 
 	/**

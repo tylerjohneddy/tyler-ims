@@ -1,5 +1,7 @@
 package com.qa.persistence.domain;
 
+import java.util.ArrayList;
+
 /**
  * @author Tyler
  *
@@ -8,8 +10,9 @@ public class Order {
 	private Long id;
 	private double cost;
 	private Long customerId;
-	private int discount;
+	private double discount;
 	private String dateTime;
+	ArrayList<Item> itemList;
 
 	/**
 	 * @param id
@@ -58,6 +61,15 @@ public class Order {
 
 	}
 
+	public Order(Long customerId, ArrayList<Item> itemList) {
+		this.customerId = customerId;
+		this.itemList = itemList;
+	}
+
+	public ArrayList<Item> getItemList() {
+		return itemList;
+	}
+
 	/**
 	 * @return
 	 */
@@ -103,14 +115,14 @@ public class Order {
 	/**
 	 * @return
 	 */
-	public int getDiscount() {
+	public double getDiscount() {
 		return discount;
 	}
 
 	/**
 	 * @param discount
 	 */
-	public void setDiscount(int discount) {
+	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
@@ -123,8 +135,10 @@ public class Order {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
-		result = prime * result + discount;
+		temp = Double.doubleToLongBits(discount);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((itemList == null) ? 0 : itemList.hashCode());
 		return result;
 	}
 
@@ -149,15 +163,18 @@ public class Order {
 				return false;
 		} else if (!dateTime.equals(other.dateTime))
 			return false;
-		if (discount != other.discount)
+		if (Double.doubleToLongBits(discount) != Double.doubleToLongBits(other.discount))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-
+		if (itemList == null) {
+			if (other.itemList != null)
+				return false;
+		} else if (!itemList.equals(other.itemList))
+			return false;
 		return true;
 	}
-
 }
