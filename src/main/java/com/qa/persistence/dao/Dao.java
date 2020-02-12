@@ -6,7 +6,7 @@ public interface Dao<T> {
 
 	List<String> readAll();
 
-	void readOne(T t);
+	T readOne(T t);
 
 	T create(T t);
 

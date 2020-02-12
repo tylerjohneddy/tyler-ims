@@ -29,7 +29,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public List<String> readAll() {
 		List<String> customer = null;
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from customers;");
 			customer = utils.resultSetToArrayList(resultSet);
@@ -37,7 +38,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			Utils.errorPrint(e);
 
 		} finally {
-			utils.close(statement,resultSet);
+			utils.close(statement, resultSet);
 		}
 
 		return customer;
@@ -48,7 +49,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public Customer create(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO customers values(null,'%s','%s');",
 					customer.getFirstName(), customer.getSurname()));
@@ -57,7 +59,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			Utils.errorPrint(e);
 
 		} finally {
-			utils.close(statement,resultSet);		}
+			utils.close(statement, resultSet);
+		}
 		return null;
 	}
 
@@ -66,14 +69,16 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public Customer update(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("UPDATE customers set forename = '%s', surname = '%s' WHERE id=%s;",
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
-			utils.close(statement,resultSet);		}
+			utils.close(statement, resultSet);
+		}
 		return null;
 
 	}
@@ -83,7 +88,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 */
 	@Override
 	public void delete(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE from customers WHERE id = '%s';", customer.getId()));
 
@@ -99,8 +105,9 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	 *
 	 */
 	@Override
-	public void readOne(Customer customer) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+	public Customer readOne(Customer customer) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement
 
@@ -115,8 +122,8 @@ public class CustomerDaoMysql implements Dao<Customer> {
 
 			utils.close(statement, resultSet);
 		}
+		return null;
 
 	}
-
 
 }
