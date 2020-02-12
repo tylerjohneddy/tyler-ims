@@ -26,7 +26,7 @@ public class ItemController implements CrudController<Item> {
 	 * @return
 	 */
 	public String getInput() {
-		return getInput();
+		return Utils.getInput();
 	}
 
 	/**
