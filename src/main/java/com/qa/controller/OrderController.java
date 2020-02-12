@@ -59,25 +59,25 @@ public class OrderController implements CrudController<Order> {
 	public Order create() {
 		LOGGER.info("Please enter a the customers ID:");
 		Long customerId = Long.parseLong(getInput());
-		ArrayList<Item> item = new ArrayList<>();
+		ArrayList<Item> itemList = new ArrayList<>();
 		Long itemId = 0L;
 		Long itemQuantity = 0L;
 
-		for (int i = 0; itemId != -1; i++) {
-			LOGGER.info("Please enter a the item ID to add:");
+		while (true) {
+			LOGGER.info("Please enter a the item ID to add, enter -1 to complete order:");
 			itemId = Long.parseLong(getInput());
+			if (itemId == -1) {
+				break;
+			}
 			// itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item  to quantity add:");
 			itemQuantity = Long.parseLong(getInput());
-			item.add(new Item(itemId, itemQuantity));
+			itemList.add(new Item(itemId, itemQuantity));
 
 		}
 
-		orderService.create(new Order(customerId));
-		LOGGER.info("Order created");
-		return null;
+		return orderService.create(new Order(customerId, itemList));
 
-		// "INSERT INTO item_order VALUES(null,order_id,item_id,quantity);"
 	}
 
 	/**

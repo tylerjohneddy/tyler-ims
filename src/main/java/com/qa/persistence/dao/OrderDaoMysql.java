@@ -35,11 +35,15 @@ public class OrderDaoMysql implements Dao<Order> {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
-			System.out.println(statement.getGeneratedKeys());
-//			for (int i = 0; i >= order.getItem().length;) {
-//				break;
-//
-//			}
+			ResultSet resultSet = statement.getGeneratedKeys();
+			resultSet.next();
+			Long orderId = (long) resultSet.getInt(1);
+			for (Item item : order.getItemList()) {
+				addItem(orderId, item);
+
+				break;
+
+			}
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
@@ -51,17 +55,12 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
-	public Order addItem(Order order, Item item) {
+	public Order addItem(Long orderId, Item item) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO item_orders values(null,'%s','%s','%s',now());",
-					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
-			System.out.println(statement.getGeneratedKeys());
-//			for (int i = 0; i >= order.getItem().length;) {
-//				break;
-//
-//			}
+			statement.executeUpdate(String.format("INSERT INTO item_orders values(null,'%s','%s','%s');", orderId,
+					item.getId(), item.getValue()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
@@ -70,7 +69,7 @@ public class OrderDaoMysql implements Dao<Order> {
 			utils.close(statement, resultSet);
 		}
 
-		return order;
+		return null;
 
 	}
 
@@ -127,7 +126,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	 *
 	 */
 	@Override
-	public void readOne(Order order) {
+	public Order readOne(Order order) {
 
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
@@ -141,6 +140,7 @@ public class OrderDaoMysql implements Dao<Order> {
 		} finally {
 			utils.close(statement, resultSet);
 		}
+		return null;
 
 	}
 

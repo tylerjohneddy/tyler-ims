@@ -103,20 +103,26 @@ public class ItemDaoMysql implements Dao<Item> {
 	 *
 	 */
 	@Override
-	public void readOne(Item item) {
+	public Item readOne(Item item) {
+		Item returnItem = null;
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
-			for (String row : utils.resultSetToArrayList(resultSet)) {
-				logger.info(row);
-			}
+
+			Long id = resultSet.getLong("id");
+			String name = resultSet.getString("name");
+			Double value = resultSet.getDouble("surname");
+			returnItem = new Item(id, name, value);
+//			for (String row : utils.resultSetToArrayList(resultSet)) {
+//				logger.info(row);
+//			}
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-
 		} finally {
 			utils.close(statement, resultSet);
 		}
+		return returnItem;
 	}
 
 }

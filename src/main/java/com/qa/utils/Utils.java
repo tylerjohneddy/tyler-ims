@@ -63,9 +63,10 @@ public class Utils {
 	 */
 	public static void errorPrint(Exception e) {
 		logger.error(e.toString());
+		e.printStackTrace();
 		logger.info("An error occured while completeing the action, please check the log files");
 	}
-	
+
 	/**
 	 * @param statement
 	 * @param resultSet

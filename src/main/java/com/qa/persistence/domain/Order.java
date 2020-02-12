@@ -1,5 +1,7 @@
 package com.qa.persistence.domain;
 
+import java.util.ArrayList;
+
 /**
  * @author Tyler
  *
@@ -10,6 +12,7 @@ public class Order {
 	private Long customerId;
 	private int discount;
 	private String dateTime;
+	ArrayList<Item> itemList;
 
 	/**
 	 * @param id
@@ -56,6 +59,15 @@ public class Order {
 	public Order(Long id) {
 		this.id = id;
 
+	}
+
+	public Order(Long customerId, ArrayList<Item> itemList) {
+		this.customerId = customerId;
+		this.itemList = itemList;
+	}
+
+	public ArrayList<Item> getItemList() {
+		return itemList;
 	}
 
 	/**
