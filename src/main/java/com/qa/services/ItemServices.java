@@ -53,8 +53,8 @@ public class ItemServices implements CrudServices<Item> {
 	 *
 	 */
 	@Override
-	public void readOne(Item item) {
-		itemDao.readOne(item);
+	public Item readOne(Item item) {
+		return itemDao.readOne(item);
 	}
 
 }

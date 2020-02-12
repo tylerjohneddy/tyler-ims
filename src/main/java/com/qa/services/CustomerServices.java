@@ -54,8 +54,8 @@ public class CustomerServices implements CrudServices<Customer> {
 	 *
 	 */
 	@Override
-	public void readOne(Customer customer) {
-		customerDao.readOne(customer);
+	public Customer readOne(Customer customer) {
+		return customerDao.readOne(customer);
 	}
 
 }
