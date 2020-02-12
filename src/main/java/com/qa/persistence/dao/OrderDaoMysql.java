@@ -20,8 +20,6 @@ import com.qa.utils.Utils;
 public class OrderDaoMysql implements Dao<Order> {
 
 	public static final Logger logger = Logger.getLogger(OrderDaoMysql.class);
-	private Statement statement = null;
-	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
 	/**
@@ -31,11 +29,12 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order create(Order order) {
 
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+
+				ResultSet resultSet = statement.getGeneratedKeys()) {
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
-			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
 			order.setId((long) resultSet.getInt(1));
 
@@ -46,8 +45,6 @@ public class OrderDaoMysql implements Dao<Order> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 
@@ -55,8 +52,7 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	public Order addItem(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			for (Item item : order.getItemList()) {
 				statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');",
 						order.getId(), item.getId(), item.getValue(), item.getQuantity()));
@@ -64,8 +60,6 @@ public class OrderDaoMysql implements Dao<Order> {
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		} finally {
-			utils.close(statement, resultSet);
 		}
 
 		return null;
@@ -74,18 +68,16 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	public Order calcCost(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(String.format(
-					"SELECT SUM(item_quantity * sold_cost) from item_order where order_id = %s;", order.getId()));
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(String.format(
+						"SELECT SUM(item_quantity * sold_cost) from item_order where order_id = %s;", order.getId()))) {
 			resultSet.next();
 			order.setCost(resultSet.getDouble(1));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		} finally {
-			utils.close(statement, resultSet);
 		}
 
 		return order;
@@ -99,16 +91,13 @@ public class OrderDaoMysql implements Dao<Order> {
 	public List<String> readAll() {
 		List<String> order = null;
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select * from orders;");
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from orders;")) {
 			order = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
-
 		return order;
 	}
 
@@ -125,13 +114,14 @@ public class OrderDaoMysql implements Dao<Order> {
 				orderCost.setCost(orderCost.getCost() * 0.9);
 
 			}
-			statement = connection.createStatement();
-			statement.executeUpdate(String.format("UPDATE orders SET cost = '%s', discount = '%s' WHERE id='%s';",
-					orderCost.getCost(), orderCost.getDiscount(), orderCost.getId()));
+
+			try (Statement statement = connection.createStatement()) {
+				statement.executeUpdate(String.format("UPDATE orders SET cost = '%s', discount = '%s' WHERE id='%s';",
+						orderCost.getCost(), orderCost.getDiscount(), orderCost.getId()));
+			}
+
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 
@@ -143,16 +133,13 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public void delete(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 
 			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
 			statement.executeUpdate(String.format("DELETE from order WHERE order_id = '%s';", order.getId()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 
 	}
@@ -164,16 +151,15 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order readOne(Order order) {
 
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(String.format("select * from orders where id = '%s';", order.getId()));
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery(String.format("select * from orders where id = '%s';", order.getId()))) {
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				logger.info(row);
 			}
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 

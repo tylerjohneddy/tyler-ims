@@ -19,8 +19,6 @@ import com.qa.utils.Utils;
 public class CustomerDaoMysql implements Dao<Customer> {
 
 	private final Logger logger = Logger.getLogger(CustomerDaoMysql.class);
-	private Statement statement = null;
-	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
 	/**
@@ -30,15 +28,13 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	public List<String> readAll() {
 		List<String> customer = null;
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("select * from customers;");
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("select * from customers;")) {
 			customer = utils.resultSetToArrayList(resultSet);
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		} finally {
-			utils.close(statement, resultSet);
 		}
 
 		return customer;
@@ -50,16 +46,13 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public Customer create(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			statement.executeUpdate(String.format("INSERT INTO customers values(null,'%s','%s');",
 					customer.getFirstName(), customer.getSurname()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 	}
@@ -70,14 +63,11 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public Customer update(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			statement.executeUpdate(String.format("UPDATE customers set forename = '%s', surname = '%s' WHERE id=%s;",
 					customer.getFirstName(), customer.getSurname(), customer.getId()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 
@@ -89,14 +79,11 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public void delete(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			statement.executeUpdate(String.format("DELETE from customers WHERE id = '%s';", customer.getId()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 
 	}
@@ -107,20 +94,16 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	@Override
 	public Customer readOne(Customer customer) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
-			resultSet = statement
-
-					.executeQuery(String.format("select * from customers where id = %s", customer.getId()));
+				Config.getPassword());
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement
+						.executeQuery(String.format("select * from customers where id = %s", customer.getId()))) {
 			for (String row : utils.resultSetToArrayList(resultSet)) {
 				logger.info(row);
 			}
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-
-			utils.close(statement, resultSet);
 		}
 		return null;
 

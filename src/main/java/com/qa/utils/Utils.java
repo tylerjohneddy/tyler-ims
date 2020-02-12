@@ -17,6 +17,9 @@ import org.apache.log4j.Logger;
 public class Utils {
 	public static final Logger logger = Logger.getLogger(Utils.class);
 
+	/**
+	 * @return from user input.
+	 */
 	public static String getInput() {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);

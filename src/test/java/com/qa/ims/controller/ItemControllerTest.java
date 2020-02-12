@@ -47,16 +47,21 @@ public class ItemControllerTest {
 		assertEquals(savedItem, itemController.create());
 	}
 
-//	@Test
-//	public void updateTest() {
-//		String id = "1";
-//		String firstName = "Rhys";
-//		String surname = "Thompson";
-//		Mockito.doReturn(id, firstName, surname).when(customerController).getInput();
-//		Customer customer = new Customer(1L, firstName, surname);
-//		Mockito.when(customerServices.update(customer)).thenReturn(customer);
-//		assertEquals(customer, customerController.update());
-//	}
+	@Test
+	public void updateTest() {
+		String id = "1";
+		String name = "Rhys";
+		String value = "9999.99";
+		Mockito.doReturn(id, name, value).when(itemController).getInput();
+		Item item = new Item(1L, name, 9999.99);
+		Mockito.when(itemServices.update(item)).thenReturn(item);
+		assertEquals(item, itemController.update());
+	}
+
+	/**
+	 * Delete doesn't return anything, so we can just verify that it calls the
+	 * delete method
+	 */
 
 	@Test
 	public void deleteTest() {
