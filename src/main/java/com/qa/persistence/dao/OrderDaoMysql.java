@@ -35,14 +35,12 @@ public class OrderDaoMysql implements Dao<Order> {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
-			ResultSet resultSet = statement.getGeneratedKeys();
+			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
 			Long orderId = (long) resultSet.getInt(1);
 			for (Item item : order.getItemList()) {
 
 				addItem(orderId, item);
-
-				break;
 
 			}
 			update(new Order(orderId));

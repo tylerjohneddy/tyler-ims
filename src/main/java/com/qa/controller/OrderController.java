@@ -73,8 +73,6 @@ public class OrderController implements CrudController<Order> {
 			}
 			ItemController itemController = new ItemController(itemServices);
 			Item item = itemController.readOne(new Item(itemId));
-
-			// itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item  to quantity add:");
 			item.setQuantity(Long.parseLong(getInput()));
 			itemList.add(item);
@@ -90,11 +88,11 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter a the order ID:");
+		LOGGER.info("Please enter the order ID:");
 		Long orderId = Long.parseLong(getInput());
-		LOGGER.info("Please enter a the item ID:");
+		LOGGER.info("Please enter the item ID:");
 		Long itemId = Long.parseLong(getInput());
-		LOGGER.info("Please enter a the new quanitity:");
+		LOGGER.info("Please enter the new quantity:");
 		Long itemQuantity = Long.parseLong(getInput());
 		return null;
 
