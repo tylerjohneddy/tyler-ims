@@ -6,6 +6,7 @@ import com.qa.utils.Utils;
 
 /**
  * @author Tyler
+ * Action is a collection of commands that are used to select functionality. 
  *
  */
 public enum Action {
@@ -27,13 +28,14 @@ public enum Action {
 
 	/**
 	 * @return
+	 * Returns a string with the name and description of each action.
 	 */
 	public String description() {
 		return String.format("%-10s : %s", this.name(),this.description);
 	}
 
 	/**
-	 * 
+	 * Prints all actions 
 	 */
 	public static void printActions() {
 		for (Action action : Action.values()) {
@@ -42,7 +44,9 @@ public enum Action {
 	}
 
 	/**
-	 * @return
+	 * Returns a action based on user input.
+	 * if user input is incorrect it asks for the input again.
+	 * @return Action
 	 */
 	public static Action getAction() {
 		Action action;

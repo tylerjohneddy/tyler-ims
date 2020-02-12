@@ -10,9 +10,17 @@ import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
 
+/**
+ * @author Tyler
+ *
+ */
 public class Ims {
 
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
+
+	/**
+	 * 
+	 */
 
 	public void imsSystem() {
 		LOGGER.info("What is your username");
@@ -24,7 +32,7 @@ public class Ims {
 		Domain.printDomains();
 
 		Domain domain = Domain.getDomain();
-		LOGGER.info("What would you like to do with " + domain.name().toLowerCase() + ":");
+		LOGGER.info(String.format("What would you like to do with %s :", domain.name().toLowerCase()));
 
 		Action.printActions();
 		Action action = Action.getAction();
@@ -49,6 +57,10 @@ public class Ims {
 
 	}
 
+	/**
+	 * @param crudController
+	 * @param action
+	 */
 	public void doAction(CrudController<?> crudController, Action action) {
 		switch (action) {
 		case CREATE:
