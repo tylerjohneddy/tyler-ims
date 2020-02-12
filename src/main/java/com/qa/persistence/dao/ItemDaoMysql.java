@@ -27,10 +27,11 @@ public class ItemDaoMysql implements Dao<Item> {
 	 */
 	@Override
 	public Item create(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO items VALUES(null,'%s','%s','%s');", item.getName(),
-					item.getValue(), item.getInStock()));
+			statement.executeUpdate(
+					String.format("INSERT INTO items VALUES(null,'%s','%s');", item.getName(), item.getValue()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
@@ -47,8 +48,8 @@ public class ItemDaoMysql implements Dao<Item> {
 	@Override
 	public List<String> readAll() {
 		List<String> item = null;
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(),
-				Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM items;");
 			item = utils.resultSetToArrayList(resultSet);
@@ -66,11 +67,11 @@ public class ItemDaoMysql implements Dao<Item> {
 	 */
 	@Override
 	public Item update(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(
-					String.format("UPDATE items set name = '%s',value = '%s',in_stock = '%s' WHERE id='%s';",
-							item.getName(), item.getValue(), item.getInStock(), item.getId()));
+			statement.executeUpdate(String.format("UPDATE items set name = '%s',value = '%s' WHERE id='%s';",
+					item.getName(), item.getValue(), item.getId()));
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		} finally {
@@ -85,7 +86,8 @@ public class ItemDaoMysql implements Dao<Item> {
 	 */
 	@Override
 	public void delete(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			statement.executeUpdate(String.format("DELETE FROM items WHERE ID = '%s';", item.getId()));
 
@@ -102,7 +104,8 @@ public class ItemDaoMysql implements Dao<Item> {
 	 */
 	@Override
 	public void readOne(Item item) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(), Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
 			for (String row : utils.resultSetToArrayList(resultSet)) {

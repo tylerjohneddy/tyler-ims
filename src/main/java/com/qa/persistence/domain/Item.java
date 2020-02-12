@@ -8,7 +8,7 @@ public class Item {
 	private Long id;
 	private String name;
 	private double value;
-	private int inStock;
+	private Long quantity;
 
 	/**
 	 * @param id
@@ -16,11 +16,11 @@ public class Item {
 	 * @param value
 	 * @param inStock
 	 */
-	public Item(Long id, String name, double value, int inStock) {
+	public Item(Long id, String name, double value) {
 		this.id = id;
 		this.name = name;
 		this.value = value;
-		this.inStock = inStock;
+
 	}
 
 	/**
@@ -28,11 +28,11 @@ public class Item {
 	 * @param value
 	 * @param inStock
 	 */
-	public Item(String name, double value, int inStock) {
+	public Item(String name, double value) {
 
 		this.name = name;
 		this.value = value;
-		this.inStock = inStock;
+
 	}
 
 	/**
@@ -40,6 +40,12 @@ public class Item {
 	 */
 	public Item(Long id) {
 		this.id = id;
+	}
+
+	public Item(Long itemId, Long itemQuantity) {
+		this.id = id;
+		this.quantity = itemQuantity;
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -85,20 +91,6 @@ public class Item {
 	}
 
 	/**
-	 * @return
-	 */
-	public int getInStock() {
-		return inStock;
-	}
-
-	/**
-	 * @param inStock
-	 */
-	public void setInStock(int inStock) {
-		this.inStock = inStock;
-	}
-
-	/**
 	 *
 	 */
 	@Override
@@ -106,7 +98,6 @@ public class Item {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + inStock;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);
@@ -130,8 +121,6 @@ public class Item {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (inStock != other.inStock)
 			return false;
 		if (name == null) {
 			if (other.name != null)

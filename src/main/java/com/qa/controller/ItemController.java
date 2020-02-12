@@ -57,9 +57,7 @@ public class ItemController implements CrudController<Item> {
 		String name = getInput();
 		LOGGER.info("Please enter an item value:");
 		double value = Double.parseDouble(getInput());
-		LOGGER.info("Please enter stock amount:");
-		int inStock = Integer.parseInt((getInput()));
-		Item item = itemService.create(new Item(name, value, inStock));
+		Item item = itemService.create(new Item(name, value));
 		LOGGER.info("Item created");
 		return item;
 
@@ -77,9 +75,7 @@ public class ItemController implements CrudController<Item> {
 			String name = Utils.getInput();
 			LOGGER.info("Please enter a value:");
 			Double value = Double.parseDouble(getInput());
-			LOGGER.info("Please enter new stock count");
-			int inStock = Integer.parseInt(getInput());
-			itemService.update(new Item(id, name, value, inStock));
+			itemService.update(new Item(id, name, value));
 		} catch (NumberFormatException e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");

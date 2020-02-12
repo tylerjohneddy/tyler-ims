@@ -1,7 +1,5 @@
 package com.qa.persistence.domain;
 
-import java.util.Arrays;
-
 /**
  * @author Tyler
  *
@@ -12,7 +10,6 @@ public class Order {
 	private Long customerId;
 	private int discount;
 	private String dateTime;
-	private Long[][] item;
 
 	/**
 	 * @param id
@@ -51,15 +48,6 @@ public class Order {
 		this.cost = cost;
 		this.customerId = customerId;
 		this.discount = discount;
-	}
-
-	/**
-	 * @param id
-	 * @param item
-	 */
-	public Order(Long id, Long[][] item) {
-		this.id = id;
-		this.item = item;
 	}
 
 	/**
@@ -126,17 +114,6 @@ public class Order {
 		this.discount = discount;
 	}
 
-	/**
-	 * @return
-	 */
-	public Long[][] getItem() {
-		return item;
-	}
-
-	public void setItem(Long[][] item) {
-		this.item = item;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -148,7 +125,6 @@ public class Order {
 		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
 		result = prime * result + discount;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + Arrays.deepHashCode(item);
 		return result;
 	}
 
@@ -180,8 +156,7 @@ public class Order {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (!Arrays.deepEquals(item, other.item))
-			return false;
+
 		return true;
 	}
 

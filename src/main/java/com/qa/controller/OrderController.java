@@ -1,5 +1,7 @@
 package com.qa.controller;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import com.qa.persistence.domain.Item;
@@ -57,21 +59,21 @@ public class OrderController implements CrudController<Order> {
 	public Order create() {
 		LOGGER.info("Please enter a the customers ID:");
 		Long customerId = Long.parseLong(getInput());
-		Long[][] item = null;
-		Long itemId = null;
+		ArrayList<Item> item = new ArrayList<>();
+		Long itemId = 0L;
 		Long itemQuantity = 0L;
 
-		for (Long i = 1L; i != -1; i = Long.parseLong(getInput())) {
+		for (int i = 0; itemId != -1; i++) {
 			LOGGER.info("Please enter a the item ID to add:");
 			itemId = Long.parseLong(getInput());
-			itemService.readOne(new Item(itemId));
-			LOGGER.info("Please enter a the item ID to add:");
-			itemId = Long.parseLong(getInput());
+			// itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item  to quantity add:");
 			itemQuantity = Long.parseLong(getInput());
+			item.add(new Item(itemId, itemQuantity));
 
 		}
-		orderService.create(new Order(customerId, item));
+
+		orderService.create(new Order(customerId));
 		LOGGER.info("Order created");
 		return null;
 
