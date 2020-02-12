@@ -3,6 +3,7 @@ package com.qa.persistence.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -27,28 +28,44 @@ public class OrderDaoMysql implements Dao<Order> {
 	 */
 	@Override
 	public Order create(Order order) {
+		ResultSet resultSet = null;
 
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword());
-				Statement statement = connection.createStatement();
-
-				ResultSet resultSet = statement.getGeneratedKeys()) {
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
+
+			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
+
 			order.setId((long) resultSet.getInt(1));
 
 			addItem(order);
 
 			updateCost(order);
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			Utils.errorPrint(e);
 
+		} finally {
+			try {
+
+				if (resultSet != null)
+
+					resultSet.close();
+
+			} catch (SQLException e) {
+
+				Utils.errorPrint(e);
+			} // end finally try
+
 		}
+			
 		return null;
 
-	}
+}
 
 	public Order addItem(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
@@ -168,8 +185,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
-			statement = connection.createStatement();
+				Config.getPassword()); Statement statement = connection.createStatement()) {
 			Item item = order.getItemList().get(0);
 			statement.executeUpdate(
 					String.format("UPDATE item_order set item_quantity = '%s' WHERE order_id='%s' AND item_id = '%s';",
@@ -177,8 +193,6 @@ public class OrderDaoMysql implements Dao<Order> {
 			updateCost(order);
 		} catch (Exception e) {
 			Utils.errorPrint(e);
-		} finally {
-			utils.close(statement, resultSet);
 		}
 		return null;
 	}
