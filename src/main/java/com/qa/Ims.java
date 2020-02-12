@@ -9,7 +9,6 @@ import com.qa.services.*;
 import com.qa.utils.Config;
 import com.qa.utils.Utils;
 
-
 /**
  * @author Tyler
  *
@@ -27,32 +26,35 @@ public class Ims {
 		Config.setUsername(Utils.getInput());
 		LOGGER.info("What is your password");
 		Config.setPassword(Utils.getInput());
+		while (true) {
 
-		LOGGER.info("Which entity would you like to use?");
-		Domain.printDomains();
+			LOGGER.info("Which entity would you like to use?");
+			Domain.printDomains();
 
-		Domain domain = Domain.getDomain();
-		LOGGER.info(String.format("What would you like to do with %s :", domain.name().toLowerCase()));
+			Domain domain = Domain.getDomain();
+			LOGGER.info(String.format("What would you like to do with %s :", domain.name().toLowerCase()));
 
-		Action.printActions();
-		Action action = Action.getAction();
+			Action.printActions();
+			Action action = Action.getAction();
 
-		switch (domain) {
-		case CUSTOMER:
-			CustomerController customerController = new CustomerController(
-					new CustomerServices(new CustomerDaoMysql()));
-			doAction(customerController, action);
-			break;
-		case ITEM:
-			ItemController itemController = new ItemController(new ItemServices(new ItemDaoMysql()));
-			doAction(itemController, action);
-			break;
-		case ORDER:
-			OrderController orderController = new OrderController(new OrderServices(new OrderDaoMysql()));
-			doAction(orderController, action);
-			break;
-		case STOP:
-			break;
+			switch (domain) {
+			case CUSTOMER:
+				CustomerController customerController = new CustomerController(
+						new CustomerServices(new CustomerDaoMysql()));
+				doAction(customerController, action);
+				break;
+			case ITEM:
+				ItemController itemController = new ItemController(new ItemServices(new ItemDaoMysql()));
+				doAction(itemController, action);
+				break;
+			case ORDER:
+				OrderController orderController = new OrderController(new OrderServices(new OrderDaoMysql()));
+				doAction(orderController, action);
+				break;
+			case STOP:
+				System.exit(0);
+				break;
+			}
 		}
 
 	}
