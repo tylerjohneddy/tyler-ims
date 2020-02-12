@@ -69,6 +69,7 @@ public class OrderController implements CrudController<Order> {
 			if (itemId == -1) {
 				break;
 			}
+
 			// itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item  to quantity add:");
 			itemQuantity = Long.parseLong(getInput());

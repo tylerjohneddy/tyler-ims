@@ -35,6 +35,14 @@ public class Item {
 
 	}
 
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
+
 	/**
 	 * @param id
 	 */
@@ -43,9 +51,8 @@ public class Item {
 	}
 
 	public Item(Long itemId, Long itemQuantity) {
-		this.id = id;
+		this.id = itemId;
 		this.quantity = itemQuantity;
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

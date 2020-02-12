@@ -59,8 +59,9 @@ public class OrderDaoMysql implements Dao<Order> {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO item_orders values(null,'%s','%s','%s');", orderId,
-					item.getId(), item.getValue()));
+			System.out.println(item.getId() + "-----------------");
+			statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');", orderId,
+					item.getId(), item.getValue(), item.getQuantity()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
