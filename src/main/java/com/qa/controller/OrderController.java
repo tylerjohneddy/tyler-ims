@@ -89,12 +89,15 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public Order update() {
 		LOGGER.info("Please enter the order ID:");
-		Long orderId = Long.parseLong(getInput());
+		Order order = new Order(Long.parseLong(getInput()));
 		LOGGER.info("Please enter the item ID:");
-		Long itemId = Long.parseLong(getInput());
+		Item item = new Item(Long.parseLong(getInput()));
 		LOGGER.info("Please enter the new quantity:");
-		Long itemQuantity = Long.parseLong(getInput());
-		return null;
+		item.setQuantity(Long.parseLong(getInput()));
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(item);
+		order.setItemList(items);
+		return orderService.update(order);
 
 		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
