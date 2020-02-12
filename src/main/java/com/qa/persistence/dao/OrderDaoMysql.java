@@ -39,11 +39,13 @@ public class OrderDaoMysql implements Dao<Order> {
 			resultSet.next();
 			Long orderId = (long) resultSet.getInt(1);
 			for (Item item : order.getItemList()) {
+
 				addItem(orderId, item);
 
 				break;
 
 			}
+			update(new Order(orderId));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
@@ -59,8 +61,8 @@ public class OrderDaoMysql implements Dao<Order> {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO item_orders values(null,'%s','%s','%s');", orderId,
-					item.getId(), item.getValue()));
+			statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');", orderId,
+					item.getId(), item.getValue(), item.getQuantity()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
@@ -70,6 +72,26 @@ public class OrderDaoMysql implements Dao<Order> {
 		}
 
 		return null;
+
+	}
+
+	public Order calcCost(Order order) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(String.format(
+					"SELECT SUM(item_quantity * sold_cost) from item_order where order_id = %s;", order.getId()));
+			resultSet.next();
+			order.setCost(resultSet.getDouble(1));
+
+		} catch (Exception e) {
+			Utils.errorPrint(e);
+
+		} finally {
+			utils.close(statement, resultSet);
+		}
+
+		return order;
 
 	}
 
@@ -98,6 +120,23 @@ public class OrderDaoMysql implements Dao<Order> {
 	 */
 	@Override
 	public Order update(Order order) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
+			Order orderCost = calcCost(order);
+			if (orderCost.getCost() >= 10000) {
+
+				orderCost.setDiscount(orderCost.getCost() * 0.1);
+				orderCost.setCost(orderCost.getCost() * 0.9);
+
+			}
+			statement = connection.createStatement();
+			statement.executeUpdate(String.format("UPDATE orders SET cost = '%s', discount = '%s' WHERE id='%s';",
+					orderCost.getCost(), orderCost.getDiscount(), orderCost.getId()));
+		} catch (Exception e) {
+			Utils.errorPrint(e);
+		} finally {
+			utils.close(statement, resultSet);
+		}
 		return null;
 
 	}

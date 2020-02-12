@@ -108,11 +108,12 @@ public class ItemDaoMysql implements Dao<Item> {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(String.format("select * from item where id = '%s'", item.getId()));
+			resultSet = statement.executeQuery(String.format("select * from items where id = '%s'", item.getId()));
+			resultSet.next();
 
 			Long id = resultSet.getLong("id");
 			String name = resultSet.getString("name");
-			Double value = resultSet.getDouble("surname");
+			Double value = resultSet.getDouble("value");
 			returnItem = new Item(id, name, value);
 //			for (String row : utils.resultSetToArrayList(resultSet)) {
 //				logger.info(row);

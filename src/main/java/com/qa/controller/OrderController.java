@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.qa.persistence.dao.ItemDaoMysql;
 import com.qa.persistence.domain.Item;
 import com.qa.persistence.domain.Order;
 import com.qa.services.CrudServices;
+import com.qa.services.ItemServices;
 import com.qa.utils.Utils;
 
 /**
@@ -17,13 +19,14 @@ public class OrderController implements CrudController<Order> {
 	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
-	private CrudServices<Item> itemService;
+	private CrudServices<Item> itemServices;
 
 	/**
 	 * @param orderService
 	 */
 	public OrderController(CrudServices<Order> orderService) {
 		this.orderService = orderService;
+		this.itemServices = new ItemServices(new ItemDaoMysql());
 	}
 
 	/**
@@ -47,9 +50,9 @@ public class OrderController implements CrudController<Order> {
 	 *
 	 */
 	@Override
-	public void readOne() {
+	public Order readOne(Order order) {
 		Long id = Long.parseLong(getInput());
-		orderService.readOne(new Order(id));
+		return orderService.readOne(new Order(id));
 	}
 
 	/**
@@ -61,7 +64,6 @@ public class OrderController implements CrudController<Order> {
 		Long customerId = Long.parseLong(getInput());
 		ArrayList<Item> itemList = new ArrayList<>();
 		Long itemId = 0L;
-		Long itemQuantity = 0L;
 
 		while (true) {
 			LOGGER.info("Please enter a the item ID to add, enter -1 to complete order:");
@@ -69,10 +71,13 @@ public class OrderController implements CrudController<Order> {
 			if (itemId == -1) {
 				break;
 			}
+			ItemController itemController = new ItemController(itemServices);
+			Item item = itemController.readOne(new Item(itemId));
+
 			// itemService.readOne(new Item(itemId));
 			LOGGER.info("Please enter a the item  to quantity add:");
-			itemQuantity = Long.parseLong(getInput());
-			itemList.add(new Item(itemId, itemQuantity));
+			item.setQuantity(Long.parseLong(getInput()));
+			itemList.add(item);
 
 		}
 
@@ -92,6 +97,13 @@ public class OrderController implements CrudController<Order> {
 		LOGGER.info("Please enter a the new quanitity:");
 		Long itemQuantity = Long.parseLong(getInput());
 		return null;
+
+		// orderService.update(new Order(orderId,itemId,itemQuantity));
+	}
+
+	public Order update(Order order) {
+
+		return orderService.update(order);
 
 		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
