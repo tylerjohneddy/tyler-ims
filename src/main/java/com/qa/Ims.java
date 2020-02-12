@@ -32,6 +32,9 @@ public class Ims {
 			Domain.printDomains();
 
 			Domain domain = Domain.getDomain();
+			if(domain.toString().equals("STOP")) {
+				System.exit(0);
+			}
 			LOGGER.info(String.format("What would you like to do with %s :", domain.name().toLowerCase()));
 
 			Action.printActions();
@@ -50,9 +53,6 @@ public class Ims {
 			case ORDER:
 				OrderController orderController = new OrderController(new OrderServices(new OrderDaoMysql()));
 				doAction(orderController, action);
-				break;
-			case STOP:
-				System.exit(0);
 				break;
 			}
 		}
