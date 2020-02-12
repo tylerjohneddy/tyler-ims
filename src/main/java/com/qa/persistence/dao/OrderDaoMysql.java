@@ -37,13 +37,11 @@ public class OrderDaoMysql implements Dao<Order> {
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
 			resultSet = statement.getGeneratedKeys();
 			resultSet.next();
-			Long orderId = (long) resultSet.getInt(1);
-			for (Item item : order.getItemList()) {
+			order.setId((long) resultSet.getInt(1));
 
-				addItem(orderId, item);
+			addItem(order);
 
-			}
-			update(new Order(orderId));
+			updateCost(order);
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);
@@ -55,13 +53,14 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	}
 
-	public Order addItem(Long orderId, Item item) {
+	public Order addItem(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			statement = connection.createStatement();
-			statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');", orderId,
-					item.getId(), item.getValue(), item.getQuantity()));
-
+			for (Item item : order.getItemList()) {
+				statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');",
+						order.getId(), item.getId(), item.getValue(), item.getQuantity()));
+			}
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 
@@ -116,8 +115,7 @@ public class OrderDaoMysql implements Dao<Order> {
 	/**
 	 *
 	 */
-	@Override
-	public Order update(Order order) {
+	public Order updateCost(Order order) {
 		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
 				Config.getPassword())) {
 			Order orderCost = calcCost(order);
@@ -179,6 +177,24 @@ public class OrderDaoMysql implements Dao<Order> {
 		}
 		return null;
 
+	}
+
+	@Override
+	public Order update(Order order) {
+		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
+				Config.getPassword())) {
+			statement = connection.createStatement();
+			Item item = order.getItemList().get(0);
+			statement.executeUpdate(
+					String.format("UPDATE item_order set item_quantity = '%s' WHERE order_id='%s' AND item_id = '%s';",
+							item.getQuantity(), order.getId(), item.getId()));
+			updateCost(order);
+		} catch (Exception e) {
+			Utils.errorPrint(e);
+		} finally {
+			utils.close(statement, resultSet);
+		}
+		return null;
 	}
 
 }

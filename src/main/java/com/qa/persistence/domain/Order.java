@@ -28,6 +28,10 @@ public class Order {
 		this.dateTime = dateTime;
 	}
 
+	public void setItemList(ArrayList<Item> itemList) {
+		this.itemList = itemList;
+	}
+
 	/**
 	 * @param id
 	 * @param cost

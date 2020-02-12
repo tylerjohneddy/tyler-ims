@@ -22,7 +22,7 @@ public class ItemDaoMysql implements Dao<Item> {
 	private ResultSet resultSet = null;
 	private Utils utils = new Utils();
 
-	/**
+	/** 
 	 *
 	 */
 	@Override
