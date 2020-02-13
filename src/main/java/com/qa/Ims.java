@@ -1,13 +1,4 @@
 package com.qa;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import org.apache.log4j.Logger;
 
 import com.qa.controller.Action;
@@ -32,6 +23,7 @@ import com.qa.utils.Utils;
 public class Ims {
 
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
+	public Config config = new Config();
 	/**
 	 * @return
 	 */
@@ -45,9 +37,9 @@ public class Ims {
 	 */
 	public void imsSystem() {
 		LOGGER.info("What is your username");
-		Config.setUsername(getInput());
+		config.setUsername(getInput());
 		LOGGER.info("What is your password");
-		Config.setPassword(getInput());
+		config.setPassword(getInput());
 		boolean exit = true;
 		while (exit) {
 
