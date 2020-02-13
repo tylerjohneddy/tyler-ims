@@ -64,5 +64,12 @@ public class CustomerControllerTest {
 		customerController.delete();
 		Mockito.verify(customerServices, Mockito.times(1)).delete(new Customer(1L));
 	}
+	@Test
+	public void readOneTest() {
+		Customer customer = new Customer(1L);
+		Mockito.when(customerServices.readOne(customer)).thenReturn(customer);
+		assertEquals(customer, customerController.readOne(customer));
+		
+	}
 
 }

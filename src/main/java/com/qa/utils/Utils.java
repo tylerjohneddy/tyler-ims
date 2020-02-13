@@ -66,34 +66,9 @@ public class Utils {
 	 */
 	public static void errorPrint(Exception e) {
 		logger.error(e.toString());
-		e.printStackTrace();
 		logger.info("An error occured while completeing the action, please check the log files");
 	}
 
-	/**
-	 * @param statement
-	 * @param resultSet
-	 */
-	public void close(Statement statement, ResultSet resultSet) {
-		try {
 
-			if (statement != null)
-				statement.close();
-
-		} catch (SQLException e) {
-			Utils.errorPrint(e);
-		} // nothing we can do
-		try {
-
-			if (resultSet != null)
-
-				resultSet.close();
-
-		} catch (SQLException e) {
-
-			Utils.errorPrint(e);
-		} // end finally try
-
-	}
 
 }

@@ -43,6 +43,7 @@ public class OrderDaoMysql implements Dao<Order> {
 			addItem(order);
 
 			updateCost(order);
+			logger.info("Order created!");
 
 		} catch (
 
@@ -153,7 +154,7 @@ public class OrderDaoMysql implements Dao<Order> {
 				Config.getPassword()); Statement statement = connection.createStatement()) {
 
 			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
-			statement.executeUpdate(String.format("DELETE from order WHERE order_id = '%s';", order.getId()));
+			statement.executeUpdate(String.format("DELETE from orders WHERE id = '%s';", order.getId()));
 
 		} catch (Exception e) {
 			Utils.errorPrint(e);

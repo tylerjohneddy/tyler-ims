@@ -12,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.controller.ItemController;
 import com.qa.persistence.domain.Item;
+import com.qa.persistence.domain.Item;
 import com.qa.services.ItemServices;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -70,4 +71,12 @@ public class ItemControllerTest {
 		itemController.delete();
 		Mockito.verify(itemServices, Mockito.times(1)).delete(new Item(1L));
 	}
+	@Test
+	public void readOneTest() {
+		Item item = new Item(1L);
+		Mockito.when(itemServices.readOne(item)).thenReturn(item);
+		assertEquals(item, itemController.readOne(item));
+	}
+		
+	
 }

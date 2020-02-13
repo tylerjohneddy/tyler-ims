@@ -3,4 +3,4 @@
  * @author Tyler
  *
  */
-package com.qa.utils;
+package com.qa.ims.utils;
