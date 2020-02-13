@@ -63,11 +63,11 @@ public class OrderController implements CrudController<Order> {
 		logger.info("Please enter a the customers ID:");
 		Long customerId = Long.parseLong(getInput());
 		ArrayList<Item> itemList = new ArrayList<>();
-		Long itemId = 0L;
+		
 
 		while (true) {
 			logger.info("Please enter a the item ID to add, enter -1 to complete order:");
-			itemId = Long.parseLong(getInput());
+			Long itemId = Long.parseLong(getInput());
 			if (itemId == -1) {
 				break;
 			}

@@ -17,7 +17,6 @@ import com.qa.utils.Utils;
  *
  */
 public class ItemDaoMysql implements Dao<Item> {
-	private final Logger logger = Logger.getLogger(ItemDaoMysql.class);
 
 	private Utils utils = new Utils();
 	private Config config = new Config();
