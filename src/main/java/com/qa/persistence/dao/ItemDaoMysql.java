@@ -105,9 +105,6 @@ public class ItemDaoMysql implements Dao<Item> {
 			String name = resultSet.getString("name");
 			Double value = resultSet.getDouble("value");
 			returnItem = new Item(id, name, value);
-//			for (String row : utils.resultSetToArrayList(resultSet)) {
-//				logger.info(row);
-//			}
 		} catch (Exception e) {
 			Utils.errorPrint(e);
 		}

@@ -110,14 +110,12 @@ public class OrderController implements CrudController<Order> {
 		order.setItemList(items);
 		return orderService.update(order);
 
-		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
 
 	public Order update(Order order) {
 
 		return orderService.update(order);
 
-		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
 
 	/**
