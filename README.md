@@ -156,5 +156,7 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Rhys Thompson** - 
 * **Sam White** - *Absolute Ledgend*
 * **James Williams** - *Dedicated Rubber Duck*
+* **Elliot Dorrington** - *High input to risk assesment*
