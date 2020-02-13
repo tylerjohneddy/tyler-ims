@@ -39,9 +39,6 @@ public class ItemController implements CrudController<Item> {
 		}
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public Item readOne(Item item) {
 
@@ -63,24 +60,23 @@ public class ItemController implements CrudController<Item> {
 
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public Item update() {
+		Item item = null;
 		try {
 			LOGGER.info("Please Enter Item ID to update:");
 			Long id = Long.parseLong(getInput());
 			LOGGER.info("Please enter a name:");
-			String name = Utils.getInput();
+			String name = getInput();
 			LOGGER.info("Please enter a value:");
 			Double value = Double.parseDouble(getInput());
-			itemService.update(new Item(id, name, value));
+			item = new Item(id, name, value);
+			itemService.update(item);
 		} catch (NumberFormatException e) {
 			LOGGER.error(e.toString());
 			LOGGER.info("An error occured while completeing the action, please check the log files");
 		}
-		return null;
+		return item;
 
 	}
 

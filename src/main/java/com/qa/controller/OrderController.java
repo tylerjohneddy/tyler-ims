@@ -16,7 +16,7 @@ import com.qa.utils.Utils;
  *
  */
 public class OrderController implements CrudController<Order> {
-	public static final Logger LOGGER = Logger.getLogger(OrderController.class);
+	public static final Logger logger = Logger.getLogger(OrderController.class);
 
 	private CrudServices<Order> orderService;
 	private CrudServices<Item> itemServices;
@@ -42,7 +42,7 @@ public class OrderController implements CrudController<Order> {
 	@Override
 	public void readAll() {
 		for (String order : orderService.readAll()) {
-			LOGGER.info(order);
+			logger.info(order);
 		}
 	}
 
@@ -60,28 +60,37 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order create() {
-		LOGGER.info("Please enter a the customers ID:");
+		logger.info("Please enter a the customers ID:");
 		Long customerId = Long.parseLong(getInput());
 		ArrayList<Item> itemList = new ArrayList<>();
 		Long itemId = 0L;
 
 		while (true) {
-			LOGGER.info("Please enter a the item ID to add, enter -1 to complete order:");
+			logger.info("Please enter a the item ID to add, enter -1 to complete order:");
 			itemId = Long.parseLong(getInput());
 			if (itemId == -1) {
 				break;
 			}
 			ItemController itemController = new ItemController(itemServices);
-			Item item = itemController.readOne(new Item(itemId));
+			try {
+				Item item = itemController.readOne(new Item(itemId));
+				if (item.getId() > 0) {
 
-			// itemService.readOne(new Item(itemId));
-			LOGGER.info("Please enter a the item  to quantity add:");
-			item.setQuantity(Long.parseLong(getInput()));
-			itemList.add(item);
+					logger.info("Please enter a the item  to quantity add:");
+					item.setQuantity(Long.parseLong(getInput()));
+					itemList.add(item);
+				}
+			}
+
+			catch (Exception e) {
+				Utils.errorPrint(e);
+
+			}
 
 		}
-
+		
 		return orderService.create(new Order(customerId, itemList));
+		
 
 	}
 
@@ -90,13 +99,16 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public Order update() {
-		LOGGER.info("Please enter a the order ID:");
-		Long orderId = Long.parseLong(getInput());
-		LOGGER.info("Please enter a the item ID:");
-		Long itemId = Long.parseLong(getInput());
-		LOGGER.info("Please enter a the new quanitity:");
-		Long itemQuantity = Long.parseLong(getInput());
-		return null;
+		logger.info("Please enter the order ID:");
+		Order order = new Order(Long.parseLong(getInput()));
+		logger.info("Please enter the item ID:");
+		Item item = new Item(Long.parseLong(getInput()));
+		logger.info("Please enter the new quantity:");
+		item.setQuantity(Long.parseLong(getInput()));
+		ArrayList<Item> items = new ArrayList<>();
+		items.add(item);
+		order.setItemList(items);
+		return orderService.update(order);
 
 		// orderService.update(new Order(orderId,itemId,itemQuantity));
 	}
@@ -113,9 +125,9 @@ public class OrderController implements CrudController<Order> {
 	 */
 	@Override
 	public void delete() {
-		LOGGER.info("Please Enter Order ID to delete:");
+		logger.info("Please Enter Order ID to delete:");
 		Long id = Long.parseLong(getInput());
-		LOGGER.info("Confirm deletion of : ");
+		logger.info("Confirm deletion of : ");
 		orderService.readOne(new Order(id));
 		if (id == Long.parseLong(getInput())) {
 			orderService.delete(new Order(id));
