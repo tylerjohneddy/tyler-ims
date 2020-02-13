@@ -26,7 +26,8 @@ public class Ims {
 		Config.setUsername(Utils.getInput());
 		LOGGER.info("What is your password");
 		Config.setPassword(Utils.getInput());
-		while (true) {
+		boolean exit = true;
+		while (exit) {
 
 			LOGGER.info("Which entity would you like to use?");
 			Domain.printDomains();
@@ -54,6 +55,10 @@ public class Ims {
 				OrderController orderController = new OrderController(new OrderServices(new OrderDaoMysql()));
 				doAction(orderController, action);
 				break;
+			case STOP:
+				exit = false;
+				break;
+				
 			}
 		}
 
