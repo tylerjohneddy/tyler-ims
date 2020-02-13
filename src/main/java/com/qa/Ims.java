@@ -23,7 +23,7 @@ import com.qa.utils.Utils;
 public class Ims {
 
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
-	public Config config = new Config();
+	private Config config = new Config();
 	/**
 	 * @return
 	 */
