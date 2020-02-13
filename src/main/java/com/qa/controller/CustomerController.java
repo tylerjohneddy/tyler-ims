@@ -40,9 +40,7 @@ public class CustomerController implements CrudController<Customer> {
 		}
 	}
 
-	/**
-	 *
-	 */
+
 	@Override
 	public Customer create() {
 		LOGGER.info("Please enter a first name:");

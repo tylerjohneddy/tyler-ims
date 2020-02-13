@@ -17,10 +17,10 @@ public class Ims {
 
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
 
+
 	/**
 	 * 
 	 */
-
 	public void imsSystem() {
 		LOGGER.info("What is your username");
 		Config.setUsername(Utils.getInput());
