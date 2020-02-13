@@ -22,5 +22,8 @@ public class OrderTest {
 		assertEquals(90, order.getDiscount(), 0.001);
 
 	}
-
+	@Test
+	public void orderHashCodeTest() {
+		assertEquals(-778078351, order.hashCode());
+	}
 }
