@@ -22,6 +22,7 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	public static final Logger logger = Logger.getLogger(OrderDaoMysql.class);
 	private Utils utils = new Utils();
+	private Config config = new Config();
 
 	/**
 	 *
@@ -30,8 +31,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	public Order create(Order order) {
 		ResultSet resultSet = null;
 
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword()); Statement statement = connection.createStatement()) {
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword()); Statement statement = connection.createStatement()) {
 			statement.executeUpdate(String.format("INSERT INTO orders values(null,'%s','%s','%s',now());",
 					order.getCost(), order.getCustomerId(), order.getDiscount()), Statement.RETURN_GENERATED_KEYS);
 
@@ -69,8 +70,8 @@ public class OrderDaoMysql implements Dao<Order> {
 }
 
 	public Order addItem(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword()); Statement statement = connection.createStatement()) {
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword()); Statement statement = connection.createStatement()) {
 			for (Item item : order.getItemList()) {
 				statement.executeUpdate(String.format("INSERT INTO item_order values(null,'%s','%s','%s','%s');",
 						order.getId(), item.getId(), item.getValue(), item.getQuantity()));
@@ -85,8 +86,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	}
 
 	public Order calcCost(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword());
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword());
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery(String.format(
 						"SELECT SUM(item_quantity * sold_cost) from item_order where order_id = %s;", order.getId()))) {
@@ -108,8 +109,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public List<String> readAll() {
 		List<String> order = null;
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword());
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword());
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement.executeQuery("select * from orders;")) {
 			order = utils.resultSetToArrayList(resultSet);
@@ -123,8 +124,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	 *
 	 */
 	public Order updateCost(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword())) {
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword())) {
 			Order orderCost = calcCost(order);
 			if (orderCost.getCost() >= 10000) {
 
@@ -150,8 +151,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	 */
 	@Override
 	public void delete(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword()); Statement statement = connection.createStatement()) {
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword()); Statement statement = connection.createStatement()) {
 
 			statement.executeUpdate(String.format("DELETE from item_order WHERE id = '%s';", order.getId()));
 			statement.executeUpdate(String.format("DELETE from orders WHERE id = '%s';", order.getId()));
@@ -168,8 +169,8 @@ public class OrderDaoMysql implements Dao<Order> {
 	@Override
 	public Order readOne(Order order) {
 
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword());
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword());
 				Statement statement = connection.createStatement();
 				ResultSet resultSet = statement
 						.executeQuery(String.format("select * from orders where id = '%s';", order.getId()))) {
@@ -185,8 +186,8 @@ public class OrderDaoMysql implements Dao<Order> {
 
 	@Override
 	public Order update(Order order) {
-		try (Connection connection = DriverManager.getConnection(Config.getUrl(), Config.getUsername(),
-				Config.getPassword()); Statement statement = connection.createStatement()) {
+		try (Connection connection = DriverManager.getConnection(config.getUrl(), config.getUsername(),
+				config.getPassword()); Statement statement = connection.createStatement()) {
 			Item item = order.getItemList().get(0);
 			statement.executeUpdate(
 					String.format("UPDATE item_order set item_quantity = '%s' WHERE order_id='%s' AND item_id = '%s';",

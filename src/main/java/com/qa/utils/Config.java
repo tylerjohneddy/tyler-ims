@@ -6,37 +6,38 @@ package com.qa.utils;
  */
 public class Config {
 
-	private static String username;
-	private static String password;
+	private String username;
+	private String password;
 
-	private static String url = "jdbc:mysql://35.230.149.143/inventory_management";
+	private String url = "jdbc:mysql://35.230.149.143/inventory_management";
 
-	private Config() {
+	public Config() {
 
 	}
 
-	public static String getUsername() {
+	public String getUsername() {
 		return username;
 	}
 
-	public static void setUsername(String username) {
-		Config.username = username;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public static String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public static void setPassword(String password) {
-		Config.password = password;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public static String getUrl() {
+	public String getUrl() {
 		return url;
 	}
 
-	public static void setUrl(String url) {
-		Config.url = url;
+	public void setUrl(String url) {
+		this.url = url;
 	}
+
 
 }
