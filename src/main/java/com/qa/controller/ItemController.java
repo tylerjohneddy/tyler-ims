@@ -11,7 +11,7 @@ import com.qa.utils.Utils;
  *
  */
 public class ItemController implements CrudController<Item> {
-	public static final Logger LOGGER = Logger.getLogger(ItemController.class);
+	public static final Logger logger = Logger.getLogger(ItemController.class);
 
 	private CrudServices<Item> itemService;
 
@@ -35,7 +35,7 @@ public class ItemController implements CrudController<Item> {
 	@Override
 	public void readAll() {
 		for (String item : itemService.readAll()) {
-			LOGGER.info(item);
+			logger.info(item);
 		}
 	}
 
@@ -50,12 +50,12 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public Item create() {
-		LOGGER.info("Please enter a name of item:");
+		logger.info("Please enter a name of item:");
 		String name = getInput();
-		LOGGER.info("Please enter an item value:");
+		logger.info("Please enter an item value:");
 		double value = Double.parseDouble(getInput());
 		Item item = itemService.create(new Item(name, value));
-		LOGGER.info("Item created");
+		logger.info("Item created");
 		return item;
 
 	}
@@ -64,17 +64,17 @@ public class ItemController implements CrudController<Item> {
 	public Item update() {
 		Item item = null;
 		try {
-			LOGGER.info("Please Enter Item ID to update:");
+			logger.info("Please Enter Item ID to update:");
 			Long id = Long.parseLong(getInput());
-			LOGGER.info("Please enter a name:");
+			logger.info("Please enter a name:");
 			String name = getInput();
-			LOGGER.info("Please enter a value:");
+			logger.info("Please enter a value:");
 			Double value = Double.parseDouble(getInput());
 			item = new Item(id, name, value);
 			itemService.update(item);
 		} catch (NumberFormatException e) {
-			LOGGER.error(e.toString());
-			LOGGER.info("An error occured while completeing the action, please check the log files");
+			logger.error(e.toString());
+			logger.info("An error occured while completeing the action, please check the log files");
 		}
 		return item;
 
@@ -85,7 +85,7 @@ public class ItemController implements CrudController<Item> {
 	 */
 	@Override
 	public void delete() {
-		LOGGER.info("Please Enter Item ID to delete:");
+		logger.info("Please Enter Item ID to delete:");
 		Long id = Long.parseLong(getInput());
 		itemService.delete(new Item(id));
 	}

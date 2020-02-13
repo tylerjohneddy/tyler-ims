@@ -108,52 +108,6 @@ public class Ims {
 			break;
 		}
 	}
-	/**
-	 * To initialise the database schema. DatabaseConnectionUrl will default to
-	 * localhost.
-	 * 
-	 * @param username
-	 * @param password
-	 */
-	public void init(String username, String password) {
-		init("jdbc:mysql://localhost:3306/", username, password, "src/main/resources/sql-schema.sql");
-	}
 
-	public String readFile(String fileLocation) {
-		StringBuilder stringBuilder = new StringBuilder();
-		try (BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
-			String string;
-			while ((string = br.readLine()) != null) {
-				stringBuilder.append(string);
-				stringBuilder.append("\r\n");
-			}
-		} catch (IOException e) {
-			for (StackTraceElement ele : e.getStackTrace()) {
-				LOGGER.debug(ele);
-			}
-			LOGGER.error(e.getMessage());
-		}
-		return stringBuilder.toString();
-	}
-
-	/**
-	 * To initialise the database with the schema needed to run the application
-	 */
-	public void init(String jdbcConnectionUrl, String username, String password, String fileLocation) {
-		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
-				BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
-			String string;
-			while ((string = br.readLine()) != null) {
-				try (Statement statement = connection.createStatement();) {
-					statement.executeUpdate(string);
-				}
-			}
-		} catch (SQLException | IOException e) {
-			for (StackTraceElement ele : e.getStackTrace()) {
-				LOGGER.debug(ele);
-			}
-			LOGGER.error(e.getMessage());
-		}
-	}
 
 }

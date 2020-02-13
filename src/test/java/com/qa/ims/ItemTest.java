@@ -14,7 +14,7 @@ public class ItemTest {
 		item.setId(2l);
 		item.setName("cake");
 		item.setValue(2.99);
-		// assertEquals(2, item.getId());
+		assertEquals(2, item.getId(),0);
 		assertEquals("cake", item.getName());
 		assertEquals(2.99, item.getValue(), 0.0001);
 

@@ -17,7 +17,7 @@ public class CustomerTest {
 		customer.setId(1l);
 		assertEquals("Tyler", customer.getFirstName());
 		assertEquals("Eddy", customer.getSurname());
-		//assertEquals(1, customer.getId());
+		assertEquals(1L, customer.getId(), 0);
 	}
 	@Test
 	public void customerHashCodeTest() {

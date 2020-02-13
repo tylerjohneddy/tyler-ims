@@ -14,15 +14,18 @@
 //import org.junit.Before;
 //import org.junit.BeforeClass;
 //import org.junit.Test;
+//import org.junit.runner.RunWith;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.mockito.Mockito;
 //import org.mockito.MockitoAnnotations;
 //import org.mockito.Spy;
-//
+//import org.mockito.junit.MockitoJUnitRunner;
 //
 //import com.qa.persistence.dao.ItemDaoMysql;
 //import com.qa.persistence.domain.Item;
+//
+//@RunWith(MockitoJUnitRunner.class)
 //
 //public class ItemMysqlDaoTest {
 //	public static final Logger logger = Logger.getLogger(ItemMysqlDaoTest.class);
@@ -43,11 +46,17 @@
 //	@InjectMocks
 //	private ItemDaoMysql itemDaoMock;
 //	
-//	@Before
-//	public void setUpItem() throws SQLException {
-//		MockitoAnnotations.initMocks(this);
-//		when(mockConnection.createStatement()).thenReturn(mockStatment);
+////	@Before
+////	public void setUpItem() throws SQLException {
+////		MockitoAnnotations.initMocks(this);
+////		//when(mockConnection.createStatement()).thenReturn(mockStatment);
+////	}
 //		
+//	@Test
+//	public void orderDaoCreateTest() {
+//		Mockito.doReturn(item).when(itemDaoMock).readOne(item);
+//		
+//	}
 //		
 //
 //		
@@ -56,4 +65,3 @@
 //		
 //	}
 //
-//}
