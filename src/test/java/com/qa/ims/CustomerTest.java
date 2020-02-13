@@ -19,6 +19,15 @@ public class CustomerTest {
 		assertEquals("Eddy", customer.getSurname());
 		//assertEquals(1, customer.getId());
 	}
+	@Test
+	public void customerHashCodeTest() {
+		assertEquals(211681940, customer.hashCode());
+	}
+	@Test
+	public void customerToStringTest() {
+		assertEquals("id:6 first name:old surname:older", customer.toString());
+		
+	}
 	
 
 

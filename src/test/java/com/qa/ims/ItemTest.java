@@ -19,5 +19,11 @@ public class ItemTest {
 		assertEquals(2.99, item.getValue(), 0.0001);
 
 	}
+	@Test
+	public void itemHashCodeTest() {
+		assertEquals(-128859143, item.hashCode());
+	}
+
+	
 
 }
