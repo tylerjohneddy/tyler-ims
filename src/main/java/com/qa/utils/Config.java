@@ -11,10 +11,6 @@ public class Config {
 
 	private String url = "jdbc:mysql://35.230.149.143/inventory_management";
 
-	public Config() {
-
-	}
-
 	public String getUsername() {
 		return username;
 	}
