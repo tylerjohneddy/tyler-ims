@@ -145,7 +145,7 @@ It is recomended to rerun the tests detailed in this document to ensure that the
 
 ## Authors
 
-* **Tyler Eddy** - *Initial work* - [tylerjohneddy](https://github.com/tylerjohneddy)
+* **Tyler Eddy** - *MAin Contribution* - [tylerjohneddy](https://github.com/tylerjohneddy)
 
 ## License
 
@@ -155,7 +155,7 @@ This project is licensed under the MIT license - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* **Chris Perrins** - *Initial work* - [christophperrins](https://github.com/christophperrins)
+* **Chris Perrins** - *The God* - [christophperrins](https://github.com/christophperrins)
 * **Rhys Thompson** - 
 * **Sam White** - *Absolute Ledgend*
 * **James Williams** - *Dedicated Rubber Duck*
