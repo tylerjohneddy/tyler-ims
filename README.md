@@ -2,6 +2,8 @@
 
 This repository contains my week five project which contains elements of all the work done to this point as a trainee at QA. The project is a java implemented Inventory management system that provides command line interface control to a MySQL database. This enables the user to Create, Read, Update and Delete (CRUD) Customer, Items and Orders in the  
 
+Test coverage for this project is 40.4%
+
 
 ## Getting Started
 
